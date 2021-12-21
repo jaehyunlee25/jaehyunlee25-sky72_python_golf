@@ -1,10 +1,11 @@
 // $("#dateListId1").html(test(1, 2));
 var addr = "/kr/reservation/real_step02_search_datelist.jsp?" +  new Date().valueOf();
 // var param = $('#searchForm1').serialize();
-var param = "fromDate=2021%2F12%2F19&toDate=2022%2F01%2F18";
+var param = "fromDate=2021%2F12%2F21&toDate=2022%2F01%2F18";
 var clubId = '22b9c7f6-60f5-11ec-a49a-0242ac11000b';
 
 var timer = setInterval(() => {
+	// dateListId1.innerHTML = "11";
 	ajax(addr, param, procStatusData);
 }, 5000);
 
