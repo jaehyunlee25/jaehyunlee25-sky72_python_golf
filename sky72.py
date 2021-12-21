@@ -40,5 +40,6 @@ f = open('result.json', 'w')
 f.write(result.get_attribute('innerHTML'))
 f.close() """
 
-# time.sleep(50)
+while True:
+    time.sleep(5)
 # driver.quit()
