@@ -33,14 +33,10 @@ f.close()
 print(con)
 
 driver.execute_script(con)
-time.sleep(3)
-""" 
-
-result = driver.find_element(By.ID, 'dateListId1')
+time.sleep(50)
+""" result = driver.find_element(By.ID, 'dateListId1')
 f = open('result.json', 'w')
 f.write(result.get_attribute('innerHTML'))
 f.close() """
 
-while True:
-    time.sleep(5)
-# driver.quit()
+driver.quit()
