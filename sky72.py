@@ -5,12 +5,15 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
+print('step 1')
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('headless')
 chrome_options.add_argument('window-size=1920x1080')
 chrome_options.add_argument('disable-gpu')
 chrome_options.add_argument("--disable-web-security")
 chrome_options.add_argument("--disable-site-isolation-trials")
+
+print('step 2')
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 # driver.implicitly_wait(15)
