@@ -33,7 +33,8 @@ f.close()
 print(con)
 
 driver.execute_script(con)
-""" time.sleep(3)
+time.sleep(3)
+""" 
 
 result = driver.find_element(By.ID, 'dateListId1')
 f = open('result.json', 'w')
