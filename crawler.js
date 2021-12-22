@@ -33,8 +33,8 @@ function procStatusData(data) {
 		});		
 	});
 
-	//var addrOuter = 'http://golf.mnemosyne.co.kr/api/reservation/newGolfStatuses';
-	var addrOuter = 'http://jaehyunlee.co.kr:3000/api/reservation/newGolfStatuses';
+	var addrOuter = 'http://golf.mnemosyne.co.kr/api/reservation/newGolfStatuses';
+	//var addrOuter = 'http://jaehyunlee.co.kr:3000/api/reservation/newGolfStatuses';
 	var header = { "Content-Type": "application/json" };
 	var param = { golf_club_id: clubId, data: res };
 	post(addrOuter, param, header, () => {});
