@@ -1,13 +1,16 @@
 // $("#dateListId1").html(test(1, 2));
 var addr = "/kr/reservation/real_step02_search_datelist.jsp?" +  new Date().valueOf();
 // var param = $('#searchForm1').serialize();
-var param = "fromDate=2021%2F12%2F21&toDate=2022%2F01%2F18";
+var now = new Date();
+var startDate = getToday(now);
+var endDate = getToday(new Date(now.setMonth(now.getMonth() + 1)));
+var param = "fromDate=" + startDate + "&toDate=" + endDate;
 var clubId = '22b9c7f6-60f5-11ec-a49a-0242ac11000b';
 
 var timer = setInterval(() => {
 	// dateListId1.innerHTML = "11";
 	ajax(addr, param, procStatusData);
-}, 5000);
+}, 15 * 1000);
 
 function procStatusData(data) {
 	$("#dateListId1").html(data);
@@ -164,3 +167,10 @@ function ajaxcallforgeneral(){
 		}
 	};
 };
+function getToday(date){
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "%2F" + month + "%2F" + day;
+}
