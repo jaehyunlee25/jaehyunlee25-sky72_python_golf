@@ -32,9 +32,11 @@ print(con)
 
 print('2.0. selenium start')
 while True:
+    print('3.0. while start')
     driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
     driver.implicitly_wait(3)
     driver.execute_script(con)
+    print('4.0. while sleep 12')
     time.sleep(12)
 
 """ result = driver.find_element(By.ID, 'dateListId1')
