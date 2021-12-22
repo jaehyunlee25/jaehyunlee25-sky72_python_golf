@@ -23,22 +23,23 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 # driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
 # addr = 'http://www.sky72.com/kr/reservation/real_step02_search_datelist.jsp?' + timestamp + '&mode=&resTabno=1&flagcd2=7&holecd=2&daykind=&sort=date&wdate_2=&wcrs_2=&page_init=Y&gb=&wcrs_sel=&fromDate=2021%2F12%2F14&toDate=2022%2F01%2F13'
 # print(addr)
-print('1.0.')
-driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
-driver.implicitly_wait(3)
 
+print('1.0. javascript call')
 f = open('crawler.js', 'r')
 con = f.read()
 f.close()
 print(con)
 
-driver.execute_script(con)
+print('2.0. selenium start')
+while True:
+    driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
+    driver.implicitly_wait(3)
+    driver.execute_script(con)
+    time.sleep(12)
 
 """ result = driver.find_element(By.ID, 'dateListId1')
 f = open('../result.json', 'w')
 f.write(result.get_attribute('innerHTML'))
 f.close() """
 
-while True:
-    time.sleep(50)
 # driver.quit()

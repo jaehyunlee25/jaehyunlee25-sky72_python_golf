@@ -16,10 +16,8 @@ var courseName = {
 };
 
 // 15초마다 golf_status 정보를 불러온다.
-var timer = setInterval(() => {
-	// dateListId1.innerHTML = "11";
-	ajax(addr, param, procStatusData);
-}, 15 * 1000);
+// var timer = setInterval(() => {}, 15 * 1000);
+ajax(addr, param, procStatusData);
 
 // test 용
 // ajax(addr, param, procStatusData);
