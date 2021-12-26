@@ -37,7 +37,7 @@ while True:
     driver.implicitly_wait(3)
     driver.execute_script(con)
     print('4.0. while sleep 12')
-    time.sleep(12)
+    time.sleep(57)
 
 """ result = driver.find_element(By.ID, 'dateListId1')
 f = open('../result.json', 'w')
