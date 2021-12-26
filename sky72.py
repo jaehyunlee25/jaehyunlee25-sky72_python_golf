@@ -36,7 +36,7 @@ while True:
     driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
     driver.implicitly_wait(3)
     driver.execute_script(con)
-    print('4.0. while sleep 12')
+    print('4.0. while sleep 57')
     time.sleep(57)
 
 """ result = driver.find_element(By.ID, 'dateListId1')
