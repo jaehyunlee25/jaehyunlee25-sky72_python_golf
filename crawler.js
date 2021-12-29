@@ -14,7 +14,7 @@ var courseName = {
 	C: '클래식코스',
 	D: '오션코스',
 };
-var OUTER_ADDR_HEADER = 'http://golf.mnemosyne.co.kr:1006';
+var OUTER_ADDR_HEADER = 'http://dev.mnemosyne.co.kr:1006';
 
 // 15초마다 golf_status 정보를 불러온다.
 // var timer = setInterval(() => {}, 15 * 1000);
