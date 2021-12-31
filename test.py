@@ -20,9 +20,15 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
 driver.implicitly_wait(3)
 
-result = driver.find_element(By.ID, 'dateListId1')
+print('1.0. javascript call')
+f = open('crawler.js', 'r')
+con = f.read()
+f.close()
+print(con)
+
+""" result = driver.find_element(By.ID, 'dateListId1')
 f = open('result.html', 'w')
 f.write(result.get_attribute('innerHTML'))
-f.close()
+f.close() """
 
 driver.quit()
