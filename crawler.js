@@ -245,7 +245,9 @@ function ajaxcallforgeneral(){
 				var data = j.xmlHttp.responseText;
 				j.ajaxcallback(data);
 			}else{
-				dateListId1.innerHTML += j.xmlHttp.responseText + "\r\n";
+				dateListId1.innerHTML += "address :: " + addr + "\r\n";
+				dateListId1.innerHTML += "header :: " + header + "\r\n";
+				dateListId1.innerHTML += "param :: " + prm + "\r\n";
 			}
 		}
 	};
