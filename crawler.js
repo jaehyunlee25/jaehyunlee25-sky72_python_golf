@@ -234,7 +234,7 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(prm);
 	};
 	function onError() {
-		dateListId1.innerHTML = "error";
+		dateListId1.innerHTML = "error :: " +ㅓ.xmlHttp.statusText;
 	};
 	function on_ReadyStateChange(){
 
