@@ -110,12 +110,14 @@ function procStatusData(data) {
 	var header = { "Content-Type": "application/json" };
 	var param = { golf_club_id: clubId, data: res };
 	try {
-		post(addrOuter, param, header, () => {});
-		var result = JSON.stringify(res);
-		dateListId1.innerHTML = result;
+		post(addrOuter, param, header, (data) => {
+			dateListId1.innerHTML = data;
+		});
 	} catch(e) {
 		dateListId1.innerHTML = e.toString();
 	}
+	/* var result = JSON.stringify(res);
+	dateListId1.innerHTML = result; */
 
 	// detail data 호출
 	// callDeatailData(options);
