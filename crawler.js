@@ -238,14 +238,14 @@ function ajaxcallforgeneral(){
 	};
 	function on_ReadyStateChange(){
 
-		dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>";
+		dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>\r\n";
 
 		if(j.xmlHttp.readyState == 4){
 			if(j.xmlHttp.status == 200){
 				var data = j.xmlHttp.responseText;
 				j.ajaxcallback(data);
 			}else{
-				dateListId1.innerHTML = j.xmlHttp.responseText;
+				dateListId1.innerHTML += j.xmlHttp.responseText;
 			}
 		}
 	};
