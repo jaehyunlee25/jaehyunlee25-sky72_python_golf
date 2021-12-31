@@ -234,7 +234,7 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(prm);
 	};
 	function onError() {
-		dateListId1.innerHTML = "error :: " +j.xmlHttp.statusText;
+		dateListId1.innerHTML = "error :: " + j.xmlHttp.statusText;
 	};
 	function on_ReadyStateChange(){
 
@@ -245,6 +245,7 @@ function ajaxcallforgeneral(){
 				var data = j.xmlHttp.responseText;
 				j.ajaxcallback(data);
 			}else{
+				dateListId1.innerHTML = j.xmlHttp.statusText;
 			}
 		}
 	};
