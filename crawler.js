@@ -255,7 +255,7 @@ function ajaxcallforgeneral(){
 				var data = j.xmlHttp.responseText;
 				j.ajaxcallback(data);
 			}else{
-				
+				dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>\r\n";
 			}
 		}
 	};
