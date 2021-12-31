@@ -24,11 +24,14 @@ print('1.0. javascript call')
 f = open('crawler.js', 'r')
 con = f.read()
 f.close()
-print(con)
 
-""" result = driver.find_element(By.ID, 'dateListId1')
-f = open('result.html', 'w')
-f.write(result.get_attribute('innerHTML'))
-f.close() """
+print('2.0. selenium start')
+driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
+driver.implicitly_wait(3)
+driver.execute_script(con)
+time.sleep(5)
+
+result = driver.find_element(By.ID, 'dateListId1')
+print(result.get_attribute('innerHTML'))
 
 driver.quit()
