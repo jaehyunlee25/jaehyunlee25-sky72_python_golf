@@ -206,6 +206,8 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(null);		
 	};
 	this.post=function(addr,prm,header){
+
+		dateListId1.innerHTML = "";
 		
 		j.xmlHttp=new XMLHttpRequest();
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
@@ -229,7 +231,7 @@ function ajaxcallforgeneral(){
 		ADDR = addr;
 		PARAM = prm;
 		HEADER = JSON.stringify(header);
-		
+
 		//console.log(prm);
 		j.xmlHttp.send(prm);
 		
