@@ -192,6 +192,7 @@ function ajaxcallforgeneral(){
 	this.jAjax=function(address, header){
 		j.xmlHttp=new XMLHttpRequest();
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
+		j.xmlHttp.onerror = onError;
 		j.xmlHttp.open("GET", address, true);
     if(header){
       Object.keys(header).trav(key=>{
@@ -207,7 +208,7 @@ function ajaxcallforgeneral(){
 
 		j.xmlHttp=new XMLHttpRequest();
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
-		j.xmlHttp.onerror = onError;
+		j.xmlHttp.onerror = (addr, prm, header) => onError(addr, prm, header);
 		j.xmlHttp.open("POST", addr, true);
 		
 		//header :: cors에 결정적
@@ -233,7 +234,7 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.open("POST", addr, true);
 		j.xmlHttp.send(prm);
 	};
-	function onError() {
+	function onError(addr, prm, header) {
 		dateListId1.innerHTML += "error :: " + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "\r\n";
 		dateListId1.innerHTML += "address :: " + addr + "\r\n";
 		dateListId1.innerHTML += "header :: " + header + "\r\n";
