@@ -207,6 +207,7 @@ function ajaxcallforgeneral(){
 
 		j.xmlHttp=new XMLHttpRequest();
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
+		j.xmlHttp.onerror = onError;
 		j.xmlHttp.open("POST", addr, true);
 		
 		//header :: cors에 결정적
@@ -231,6 +232,9 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
 		j.xmlHttp.open("POST", addr, true);
 		j.xmlHttp.send(prm);
+	};
+	function onError() {
+		dateListId1.innerHTML = "error";
 	};
 	function on_ReadyStateChange(){
 
