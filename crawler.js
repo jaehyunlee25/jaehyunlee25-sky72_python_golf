@@ -189,6 +189,9 @@ function ajaxcallforgeneral(){
 	this.xmlHttp;
 	var j = this;
 	var HTTP = {};
+	var ADDR;
+	var PARAM;
+	var HEADER;
 	this.jAjax=function(address, header){
 		j.xmlHttp=new XMLHttpRequest();
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
@@ -203,6 +206,10 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(null);		
 	};
 	this.post=function(addr,prm,header){
+
+		ADDR = addr;
+		PARAM = prm;
+		HEADER = header;
 
 		dateListId1.innerHTML = "";
 
@@ -235,14 +242,9 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(prm);
 	};
 	function onError(e) {
-		var arr = [];
-		Object.keys(e).forEach((key, i) => {
-			arr.push(key);
-		});
-		dateListId1.innerHTML += "error :: " + arr + "\r\n";
-		/* dateListId1.innerHTML += "address :: " + addr + "\r\n";
-		dateListId1.innerHTML += "header :: " + header + "\r\n";
-		dateListId1.innerHTML += "param :: " + prm + "\r\n"; */
+		dateListId1.innerHTML += "address :: " + ADDR + "\r\n";
+		dateListId1.innerHTML += "header :: " + HEADER + "\r\n";
+		dateListId1.innerHTML += "param :: " + PARAM + "\r\n";
 	};
 	function on_ReadyStateChange(){
 
