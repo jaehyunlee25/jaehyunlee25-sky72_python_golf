@@ -109,18 +109,12 @@ function procStatusData(data) {
 	//var addrOuter = 'http://jaehyunlee.co.kr:3000/api/reservation/newGolfStatuses';
 	var header = { "Content-Type": "application/json" };
 	var param = { golf_club_id: clubId, data: res };
-	try {
-		post(addrOuter, param, header, (ppp) => {
-			dateListId1.innerHTML = ppp;
-		});
-	} catch(e) {
-		dateListId1.innerHTML = e.toString();
-	}
-	/* var result = JSON.stringify(res);
-	dateListId1.innerHTML = result; */
+	post(addrOuter, param, header, () => {});
+	var result = JSON.stringify(res);
+	dateListId1.innerHTML = result;
 
 	// detail data 호출
-	// callDeatailData(options);
+	callDeatailData(options);
 };
 function procDate(str) {
 	return str.ct(3).replace(/\./g, '/');
@@ -236,6 +230,7 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(prm);
 	};
 	function on_ReadyStateChange(){
+		dateListId1.innerHTML = j.xmlHttp.readyState + " :: " + j.xmlHttp.status;
 		if(j.xmlHttp.readyState==4){
 			if(j.xmlHttp.status==200){
 				var data = j.xmlHttp.responseText;
