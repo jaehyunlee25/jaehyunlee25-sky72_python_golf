@@ -138,9 +138,6 @@ function onError(e) {
 
 };
 function post(addr,param,header,callback){
-
-	dateListId1.innerHTML = "";
-
 	var a=new ajaxcallforgeneral(),
 		str=[];
 	if(header["Content-Type"] == "application/json"){
@@ -209,13 +206,7 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(null);		
 	};
 	this.post=function(addr,prm,header){
-
-		ADDR = addr;
-		PARAM = prm;
-		HEADER = header;
-
 		
-
 		j.xmlHttp=new XMLHttpRequest();
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
 		j.xmlHttp.onerror = onError;
@@ -225,15 +216,20 @@ function ajaxcallforgeneral(){
 		//j.xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		if(header){
 			if(header["Content-Type"])
-				Object.keys(header).trav(key=>{
-					var val=header[key];
-					j.xmlHttp.setRequestHeader(key,val);
-				});
+			Object.keys(header).trav(key=>{
+				var val=header[key];
+				j.xmlHttp.setRequestHeader(key,val);
+			});
 			else
-				j.xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+			j.xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		}else{
 			j.xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		}
+
+		ADDR = addr;
+		PARAM = prm;
+		HEADER = JSON.stringify(header);
+		
 		//console.log(prm);
 		j.xmlHttp.send(prm);
 		
