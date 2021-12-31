@@ -235,6 +235,9 @@ function ajaxcallforgeneral(){
 	};
 	function onError() {
 		dateListId1.innerHTML += "error :: " + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "\r\n";
+		dateListId1.innerHTML += "address :: " + addr + "\r\n";
+		dateListId1.innerHTML += "header :: " + header + "\r\n";
+		dateListId1.innerHTML += "param :: " + prm + "\r\n";
 	};
 	function on_ReadyStateChange(){
 
@@ -245,9 +248,7 @@ function ajaxcallforgeneral(){
 				var data = j.xmlHttp.responseText;
 				j.ajaxcallback(data);
 			}else{
-				dateListId1.innerHTML += "address :: " + addr + "\r\n";
-				dateListId1.innerHTML += "header :: " + header + "\r\n";
-				dateListId1.innerHTML += "param :: " + prm + "\r\n";
+				
 			}
 		}
 	};
