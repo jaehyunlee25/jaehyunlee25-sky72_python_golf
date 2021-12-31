@@ -235,7 +235,11 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(prm);
 	};
 	function onError(e) {
-		dateListId1.innerHTML += "error :: " + e.toString() + "\r\n";
+		var arr = [];
+		Object.keys(e).forEach((key, i) => {
+			arr.push(key);
+		});
+		dateListId1.innerHTML += "error :: " + arr + "\r\n";
 		/* dateListId1.innerHTML += "address :: " + addr + "\r\n";
 		dateListId1.innerHTML += "header :: " + header + "\r\n";
 		dateListId1.innerHTML += "param :: " + prm + "\r\n"; */
