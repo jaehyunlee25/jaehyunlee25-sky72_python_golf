@@ -202,6 +202,9 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(null);		
 	};
 	this.post=function(addr,prm,header){
+
+		dateListId1.innerHTML = "";
+
 		j.xmlHttp=new XMLHttpRequest();
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
 		j.xmlHttp.open("POST", addr, true);
@@ -230,7 +233,7 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(prm);
 	};
 	function on_ReadyStateChange(){
-		dateListId1.innerHTML = j.xmlHttp.readyState + " :: " + j.xmlHttp.status;
+		dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>";
 		if(j.xmlHttp.readyState==4){
 			if(j.xmlHttp.status==200){
 				var data = j.xmlHttp.responseText;
