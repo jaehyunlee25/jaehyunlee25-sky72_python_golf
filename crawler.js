@@ -138,6 +138,9 @@ function onError(e) {
 
 };
 function post(addr,param,header,callback){
+
+	dateListId1.innerHTML = "";
+
 	var a=new ajaxcallforgeneral(),
 		str=[];
 	if(header["Content-Type"] == "application/json"){
@@ -211,7 +214,7 @@ function ajaxcallforgeneral(){
 		PARAM = prm;
 		HEADER = header;
 
-		dateListId1.innerHTML = "";
+		
 
 		j.xmlHttp=new XMLHttpRequest();
 		j.xmlHttp.onreadystatechange=on_ReadyStateChange;
@@ -241,7 +244,7 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.open("POST", addr, true);
 		j.xmlHttp.send(prm);
 	};
-	function onError(e) {
+	function onError() {
 		dateListId1.innerHTML += "address :: " + ADDR + "\r\n";
 		dateListId1.innerHTML += "header :: " + HEADER + "\r\n";
 		dateListId1.innerHTML += "param :: " + PARAM + "\r\n";
