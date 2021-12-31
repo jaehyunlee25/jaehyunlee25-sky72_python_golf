@@ -238,9 +238,6 @@ function ajaxcallforgeneral(){
 
 		if(j.xmlHttp.readyState == 4){
 			if(j.xmlHttp.status == 200){
-
-				dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>";
-
 				var data = j.xmlHttp.responseText;
 				j.ajaxcallback(data);
 			}else{
