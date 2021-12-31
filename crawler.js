@@ -234,12 +234,7 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(prm);
 	};
 	function onError() {
-		dateListId1.innerHTML += "error :: " + j.xmlHttp.statusText + "\r\n";
-		var arr = [];
-		Object.keys(j.xmlHttp).forEach((key, i) => {
-			arr.push(key);
-		});
-		dateListId1.innerHTML += arr.join("\r\n");
+		dateListId1.innerHTML += "error :: " + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "\r\n";
 	};
 	function on_ReadyStateChange(){
 
