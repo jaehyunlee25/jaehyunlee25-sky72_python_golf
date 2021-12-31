@@ -114,7 +114,7 @@ function procStatusData(data) {
 	dateListId1.innerHTML = result;
 
 	// detail data 호출
-	callDeatailData(options);
+	// callDeatailData(options);
 };
 function procDate(str) {
 	return str.ct(3).replace(/\./g, '/');
