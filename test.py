@@ -17,9 +17,6 @@ chrome_options.add_argument("--disable-site-isolation-trials")
 print('step 2')
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
-driver.implicitly_wait(3)
-
 print('1.0. javascript call')
 f = open('crawler.js', 'r')
 con = f.read()
