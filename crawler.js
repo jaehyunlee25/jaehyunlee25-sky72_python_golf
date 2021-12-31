@@ -110,8 +110,8 @@ function procStatusData(data) {
 	var header = { "Content-Type": "application/json" };
 	var param = { golf_club_id: clubId, data: res };
 	try {
-		post(addrOuter, param, header, (data) => {
-			dateListId1.innerHTML = data;
+		post(addrOuter, param, header, (ppp) => {
+			dateListId1.innerHTML = ppp;
 		});
 	} catch(e) {
 		dateListId1.innerHTML = e.toString();
