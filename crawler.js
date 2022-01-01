@@ -110,11 +110,11 @@ function procStatusData(data) {
 	var header = { "Content-Type": "application/json" };
 	var param = { golf_club_id: clubId, data: res };
 	post(addrOuter, param, header, () => {});
-	/* var result = JSON.stringify(res);
-	dateListId1.innerHTML = result; */
+	var result = JSON.stringify(res);
+	dateListId1.innerHTML = result;
 
 	// detail data 호출
-	// callDeatailData(options);
+	callDeatailData(options);
 };
 function procDate(str) {
 	return str.ct(3).replace(/\./g, '/');
