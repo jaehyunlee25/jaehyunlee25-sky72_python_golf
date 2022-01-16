@@ -75,8 +75,10 @@ function procResultDataDetail(str) {
 		cnt++;
 		if (cnt > lmt) {
 			clearInterval(timer);
-			const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/detailCircuitEnd';
-			post(addrOuter, { golf_club_id: clubId }, header, () => {});	
+			setTimeout(() => {
+				const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/detailCircuitEnd';
+				post(addrOuter, { golf_club_id: clubId }, header, () => {});
+			}, 1000);
 		}
 	}, 300);
 };
