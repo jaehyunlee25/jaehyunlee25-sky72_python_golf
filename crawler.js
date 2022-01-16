@@ -106,7 +106,7 @@ function procStatusData(data) {
 	});
 
 	var addrOuter = OUTER_ADDR_HEADER + '/api/reservation/newGolfStatuses';
-	//var addrOuter = 'http://jaehyunlee.co.kr:3000/api/reservation/newGolfStatuses';
+	// var addrOuter = 'http://jaehyunlee.co.kr:3000/api/reservation/newGolfStatuses';
 	var header = { "Content-Type": "application/json" };
 	var param = { golf_club_id: clubId, data: res };
 	post(addrOuter, param, header, () => {});
@@ -243,13 +243,13 @@ function ajaxcallforgeneral(){
 		j.xmlHttp.send(prm);
 	};
 	function onError() {
-		dateListId1.innerHTML += "address :: " + ADDR + "\r\n";
+		/* dateListId1.innerHTML += "address :: " + ADDR + "\r\n";
 		dateListId1.innerHTML += "header :: " + HEADER + "\r\n";
-		dateListId1.innerHTML += "param :: " + PARAM + "\r\n";
+		dateListId1.innerHTML += "param :: " + PARAM + "\r\n"; */
 	};
 	function on_ReadyStateChange(){
 
-		dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>\r\n";
+		/* dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>\r\n"; */
 
 		if(j.xmlHttp.readyState == 4){
 			if(j.xmlHttp.status == 200){
