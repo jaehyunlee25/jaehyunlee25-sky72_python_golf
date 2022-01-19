@@ -31,7 +31,7 @@ f.close()
 print(con)
 
 print('2.0. selenium start')
-time.sleep(10)
+time.sleep(20)
 while True:
     print('3.0. while start')
     driver.get('https://www.incheongrand.cc/GolfRes/onepage/real_reservation.asp')
