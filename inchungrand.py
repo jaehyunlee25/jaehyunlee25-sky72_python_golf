@@ -13,6 +13,7 @@ chrome_options.add_argument('disable-gpu')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument("--disable-web-security")
 chrome_options.add_argument("--disable-site-isolation-trials")
+chrome_options.add_argument("--disable-dev-shm-usage")
 
 print('step 2')
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
