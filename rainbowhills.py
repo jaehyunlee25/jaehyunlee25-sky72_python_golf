@@ -31,7 +31,7 @@ f.close()
 print(con)
 
 print('2.0. selenium start')
-time.sleep(30)
+time.sleep(40)
 while True:
     print('3.0. while start')
     driver.get('https://www.rainbowhills.co.kr/index.asp')
