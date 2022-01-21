@@ -148,7 +148,8 @@ function mneCall(date, callback) {
     });
 };
 function procStrDetail(str) {
-	const regex = /Book_time[0-9]?\((.+)\)/;
+	console.log(str);
+	const regex = /Book_time\d*\((.+)\)/;
 	const values = regex.exec(str)[1].replace(/'/g,'').split(',');
 	return {time: addColon(values[3]), course: values[2].replace(/\"/g,'').replace(' ',''), greenfee: values[4]};
 };
