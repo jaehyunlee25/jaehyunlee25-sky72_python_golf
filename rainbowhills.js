@@ -18,9 +18,10 @@ console.log(thisdate, nextdate);
 const dates = [];
 const result = [];
 
+// mneCall(thisdate, procDate);
 mneCall(thisdate, () => {
 	mneCall(nextdate, procDate);
-});	
+});
 
 function procResultDataDetail(str) {
 	const data = JSON.parse(str);
@@ -159,6 +160,7 @@ function mneCall(date, callback) {
 			const ob = procStr(a.href);
 			if (!ob) return;
 			if (ob.type !== 'T') return;
+			console.log(ob.date);
 			dates.push([ob.date, 0]);
 		});
 		callback();
