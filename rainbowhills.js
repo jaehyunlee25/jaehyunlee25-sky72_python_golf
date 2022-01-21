@@ -1,6 +1,6 @@
 
-const clubId = '4c6747cf-774f-11ec-b15c-0242ac110005';
-const courses = { IN: 'IN 코스', OUT: 'OUT 코스'};
+const clubId = '1a82280f-7a9c-11ec-b15c-0242ac110005';
+const courses = { EAST: 'EAST 코스', SOUTH: 'SOUTH 코스', WEST: 'WEST 코스'};
 const OUTER_ADDR_HEADER = 'https://dev.mnemosyne.co.kr';
 const header = { "Content-Type": "application/json" };
 
@@ -19,51 +19,33 @@ const dates = [];
 const result = [];
 
 mneCall(thisdate, () => {
-    mneCall(nextdate, procDate);
-});
+	mneCall(nextdate, procDate);
+});	
 
 function procResultDataDetail(str) {
 	const data = JSON.parse(str);
 	if (data.resultCode !== 200) return;
 	const result = [];
 	dates.forEach(([date, teams, obTeams]) => {
-		// for IN
-		if (Object.keys(obTeams.IN).length > 0) {
-			const objIN = {
-				golf_club_id: clubId,
-				date,
-				course: courses.IN,
-				data: []
-			};
-			Object.keys(obTeams.IN).forEach((timeSlot, j) => {
-				const arr = obTeams.IN[timeSlot];
-				objIN.data.push({
-					timeSlot: timeSlot + ":00",
-					greenFee: arr[0].greenfee,
-					teams: arr.length,
+		Object.keys(obTeams).forEach((course) => {
+			if (Object.keys(obTeams[course]).length > 0) {
+				const objCourse = {
+					golf_club_id: clubId,
+					date,
+					course: courses[course],
+					data: []
+				};
+				Object.keys(obTeams[course]).forEach((timeSlot, j) => {
+					const arr = obTeams[course][timeSlot];
+					objCourse.data.push({
+						timeSlot: timeSlot + ":00",
+						greenFee: arr[0].greenfee,
+						teams: arr.length,
+					});
 				});
-			});
-			result.push(objIN);
-		}
-
-		// for OUT
-		if (Object.keys(obTeams.OUT).length > 0) {
-			const objOut = {
-				golf_club_id: clubId,
-				date,
-				course: courses.OUT,
-				data: []
-			};
-			Object.keys(obTeams.OUT).forEach((timeSlot, j) => {
-				const arr = obTeams.OUT[timeSlot];
-				objOut.data.push({
-					timeSlot: timeSlot + ":00:00",
-					greenFee: arr[0].greenfee,
-					teams: arr.length,
-				});
-			});
-			result.push(objOut);
-		}
+				result.push(objCourse);
+			}
+		});
 	});
 	
 	const lmt = result.length - 1;
@@ -86,24 +68,18 @@ function procResultData(date, obTeams, opt) {
 	const ar = dates.find((arr) => arr[0] == date);
 	ar.push(obTeams);
 	if (!opt) return; 
-	
+
 	dates.forEach(([dt, num, ob]) => {
 		if (ob === undefined) return;
-		// IN
-		const inNum = getSum(ob.IN);
-		if (inNum > 0) result.push({
-			courseName: courses.IN,
-			date: dt,
-			status: '가능',
-			teams: inNum
-		});
-		// OUT
-		const outNum = getSum(ob.OUT);
-		if (outNum > 0) result.push({
-			courseName: courses.OUT,
-			date: dt,
-			status: '가능',
-			teams: outNum
+		// course별 묶음
+		Object.keys(ob).forEach((course) => {
+			const courseNum = getSum(ob[course]);
+			if (courseNum > 0) result.push({
+				courseName: courses[course],
+				date: dt,
+				status: '가능',
+				teams: courseNum
+			});
 		});
 	});
 
@@ -132,27 +108,28 @@ function procDate() {
 	}, 300);	
 };
 function mneCallDetail(opt, date, callback) {
-	const param = {
-		golfrestype: 'real',
-		courseid: 0, // maybe 0: 전체, 1: IN, 2: OUT
-		usrmemcd: 10,
+	const param = { 
+		golfrestype: 'T',
+		courseid: 0,
+		usrmemcd: 91,
 		pointdate: date,
 		openyn: 1,
-		dategbn: 6,
+		dategbn: 4,
 		choice_time: '00',
 		cssncourseum: '',
-		inputtype: 1
+		inputtype: 'Q',
 	};
-	post('real_timelist_ajax_list.asp', param, {}, data => {		
+	post('/GolfRes/onepage/real_timelist_ajax_list.asp', param, {}, data => {
         const ifr = document.createElement('div');
         ifr.innerHTML = data;
         
-        const as = ifr.getElementsByTagName('a');
+        const trs = ifr.getElementsByTagName('tr');
 		const obTeams = {};
-		Array.from(as).forEach((a) => {			
-			const ob = procHrefDetail(a.href);
-			if (!ob) return;
-			const { course, time, greenfee } = ob;
+		Array.from(trs).forEach((tr, i) => {
+			if (i === 0) return;
+			const course = tr.children[1].innerText;
+			const time = tr.children[2].innerText;
+			const greenfee = tr.children[4].children[0].innerText.replace(/,/g,'') * 1;
 			const slot = time.gh(2);
 			if(!obTeams[course]) obTeams[course] = {};
 			if(!obTeams[course][slot]) obTeams[course][slot] = [];
@@ -168,17 +145,18 @@ function mneCall(date, callback) {
 	const param = {
 		golfrestype: 'real',
 		schDate: date,
-		usrmemcd: 10,
-		toDay: date + '01',
-		calnum: 2
+		usrmemcd: '91',
+		toDay: date+"01",
+		calnum: 1,
+		inputtype: 'Q'
 	};
-    post('real_calendar_ajax_view.asp', param, {}, data => {   
+    post('/GolfRes/mainpage/quick_calendar_ajax_view.asp', param, {}, data => {
 		const ifr = document.createElement('div');
         ifr.innerHTML = data;
 
 		const as = ifr.getElementsByTagName('a');
 		Array.from(as).forEach((a) => {			
-			const ob = procHref(a.href);
+			const ob = procStr(a.href);
 			if (!ob) return;
 			if (ob.type !== 'T') return;
 			dates.push([ob.date, 0]);
@@ -186,18 +164,19 @@ function mneCall(date, callback) {
 		callback();
     });
 };
-function procHrefDetail(str) {
-	const head = str.indexOf('subcmd');
+function procStrDetail(str) {
+	console.log(str);
+	const head = str.indexOf('quick_timeapply_subcmd');
 	if(head === -1) return false;
-	const regex = /\((.+)\)/;
+	const regex = /quick_timeapply_subcmd\((.+)\)/;
 	const values = regex.exec(str)[1].replace(/'/g,'').split(',');
 	return {time: addColon(values[2]), course: values[3], greenfee: values[8]};
 };
 function addColon(str) {
 	return str.gh(2) + ":" + str.gt(2);
 };
-function procHref(str) {
-	const head = str.indexOf('timefrom_change');
+function procStr(str) {
+	const head = str.indexOf('quick_timefrom_change');
 	if(head === -1) return false;
 	const regex = /\((.+)\)/;
 	const values = regex.exec(str)[1].replace(/'/g,'').split(',');
