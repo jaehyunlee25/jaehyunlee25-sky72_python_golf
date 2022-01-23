@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
-time.sleep(50)
+# time.sleep(50)
 print('\n\n\n\n\n\n== dongchon ==')
 print('50 delayed')
 
