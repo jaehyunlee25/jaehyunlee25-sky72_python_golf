@@ -6,7 +6,7 @@ from datetime import datetime
 import time
 
 time.sleep(50)
-print('== dongchon ==')
+print('\n\n\n\n\n\n== dongchon ==')
 print('50 delayed')
 
 print('step 1')
@@ -35,6 +35,7 @@ f.close()
 
 print('2.0. selenium start')
 while True:
+    print('\n\n\n\n\n\n== dongchon ==')
     print('3.0. while start')
     driver.get('https://www.dongchongc.co.kr:442/Booking/ReservationCalendar')
     driver.implicitly_wait(3)

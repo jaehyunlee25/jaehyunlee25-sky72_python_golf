@@ -6,7 +6,7 @@ from datetime import datetime
 import time
 
 time.sleep(10)
-print('== namchunchun ==')
+print('\n\n\n\n\n\n== namchunchun ==')
 print('10 delayed')
 
 print('step 1')
@@ -36,6 +36,7 @@ f.close()
 
 print('2.0. selenium start')
 while True:
+    print('\n\n\n\n\n\n== dongchon ==')
     print('3.0. while start')
     driver.get('https://www.namchuncheon.co.kr/html/reservation/reservation_01_01.asp')
     driver.implicitly_wait(3)
