@@ -32,7 +32,6 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 f = open('dongchon.js', 'r')
 con = f.read()
 f.close()
-print(con)
 
 print('2.0. selenium start')
 while True:

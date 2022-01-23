@@ -33,7 +33,7 @@ print('1.0. javascript call')
 l = open('island_login.js', 'r')
 lcon = l.read()
 l.close()
-print(lcon)
+
 driver.get('https://www.islandresort.co.kr/html/member/Login.asp')
 driver.implicitly_wait(3)
 driver.execute_script(lcon)
@@ -42,7 +42,6 @@ driver.implicitly_wait(3)
 f = open('island.js', 'r')
 con = f.read()
 f.close()
-print(con)
 
 print('2.0. selenium start')
 while True:

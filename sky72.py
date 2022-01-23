@@ -33,7 +33,6 @@ print('1.0. javascript call')
 f = open('crawler.js', 'r')
 con = f.read()
 f.close()
-print(con)
 
 print('2.0. selenium start')
 while True:
