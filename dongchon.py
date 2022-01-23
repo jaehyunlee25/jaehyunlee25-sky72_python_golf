@@ -31,7 +31,7 @@ f.close()
 print(con)
 
 print('2.0. selenium start')
-time.sleep(40)
+time.sleep(50)
 while True:
     print('3.0. while start')
     driver.get('https://www.dongchongc.co.kr:442/Booking/ReservationCalendar')
