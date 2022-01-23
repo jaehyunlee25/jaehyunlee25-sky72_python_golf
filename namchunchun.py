@@ -5,6 +5,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
+time.sleep(10)
+print('== namchunchun ==')
+print('10 delayed')
+
 print('step 1')
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('headless')
@@ -32,7 +36,6 @@ f.close()
 print(con)
 
 print('2.0. selenium start')
-time.sleep(10)
 while True:
     print('3.0. while start')
     driver.get('https://www.namchuncheon.co.kr/html/reservation/reservation_01_01.asp')

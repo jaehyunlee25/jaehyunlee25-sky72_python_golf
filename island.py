@@ -5,6 +5,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
+time.sleep(30)
+print('== island ==')
+print('30 delayed')
+
 print('step 1')
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('headless')
@@ -35,14 +39,12 @@ driver.implicitly_wait(3)
 driver.execute_script(lcon)
 driver.implicitly_wait(3)
 
-
 f = open('island.js', 'r')
 con = f.read()
 f.close()
 print(con)
 
 print('2.0. selenium start')
-time.sleep(30)
 while True:
     print('3.0. while start')
     driver.get('https://www.islandresort.co.kr/html/reserve/reserve01.asp')

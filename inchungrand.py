@@ -5,6 +5,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
+time.sleep(20)
+print('== inchungrand ==')
+print('20 delayed')
+
 print('step 1')
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('headless')
@@ -32,7 +36,6 @@ f.close()
 print(con)
 
 print('2.0. selenium start')
-time.sleep(20)
 while True:
     print('3.0. while start')
     driver.get('https://www.incheongrand.cc/GolfRes/onepage/real_reservation.asp')

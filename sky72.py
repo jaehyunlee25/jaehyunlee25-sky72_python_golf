@@ -5,6 +5,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
+time.sleep(0)
+print('== sky72 ==')
+print('0 delayed')
+
 print('step 1')
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('headless')
