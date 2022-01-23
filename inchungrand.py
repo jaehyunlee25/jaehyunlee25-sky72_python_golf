@@ -36,7 +36,7 @@ f.close()
 
 print('2.0. selenium start')
 while True:
-    print('\n\n\n\n\n\n== dongchon ==')
+    print('\n\n\n\n\n\n== inchungrand ==')
     print('3.0. while start')
     driver.get('https://www.incheongrand.cc/GolfRes/onepage/real_reservation.asp')
     driver.implicitly_wait(3)

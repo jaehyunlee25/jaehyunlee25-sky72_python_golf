@@ -45,7 +45,7 @@ f.close()
 
 print('2.0. selenium start')
 while True:
-    print('\n\n\n\n\n\n== dongchon ==')
+    print('\n\n\n\n\n\n== island ==')
     print('3.0. while start')
     driver.get('https://www.islandresort.co.kr/html/reserve/reserve01.asp')
     driver.implicitly_wait(3)

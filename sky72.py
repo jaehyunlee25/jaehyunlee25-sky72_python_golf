@@ -36,7 +36,7 @@ f.close()
 
 print('2.0. selenium start')
 while True:
-    print('\n\n\n\n\n\n== dongchon ==')
+    print('\n\n\n\n\n\n== sky72 ==')
     print('3.0. while start')
     driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
     driver.implicitly_wait(3)
