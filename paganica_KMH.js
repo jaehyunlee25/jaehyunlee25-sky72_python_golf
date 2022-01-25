@@ -22,6 +22,7 @@ function procResultDataDetail(str) {
 	dates.forEach(([date, teams, obTeams]) => {
 		Object.keys(obTeams).forEach((course) => {
 			if (Object.keys(obTeams[course]).length > 0) {
+				console.log('COURSE', course, courses[course]);
 				const objCourse = {
 					golf_club_id: clubId,
 					date,
