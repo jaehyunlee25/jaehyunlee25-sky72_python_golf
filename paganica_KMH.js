@@ -44,6 +44,7 @@ function procResultDataDetail(str) {
 	const lmt = result.length - 1;
 	let cnt = 0;
 	const timer = setInterval(() => {
+		console.log('보내기', cnt + '/' + lmt);
 		const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/newGolfStatusDetail';
 		const param = result[cnt];
 		post(addrOuter, param, header, () => {});
@@ -91,7 +92,7 @@ function procDate() {
 	const lmt = dates.length - 1; 
 	let cnt = 0;
 	const timer = setInterval(() => {
-		console.log(cnt);
+		console.log('수집하기', cnt + '/' + lmt);
 		const arrDate = dates[cnt];
 		mneCallDetail(cnt === lmt, arrDate, procResultData);
 		cnt++;
