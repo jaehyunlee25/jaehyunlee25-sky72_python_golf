@@ -37,7 +37,7 @@ print('2.0. selenium start')
 while True:
     print('\n\n\n\n\n\n== paganica_KMH ==')
     print('3.0. while start')
-    driver.get('https://paju.kmhleisure.com/Reservation/Reservation.aspx?choiceGolf=109')
+    driver.get('https://paganica.kmhleisure.com/Reservation/Reservation.aspx?choiceGolf=120')
     driver.implicitly_wait(3)
     driver.execute_script(con)
     print('4.0. while sleep 57')
