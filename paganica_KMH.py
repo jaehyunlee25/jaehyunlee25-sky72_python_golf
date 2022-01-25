@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
-time.sleep(45)
+# time.sleep(45)
 print('\n\n\n\n\n\n== paganica_KMH ==')
 print('45 delayed')
 
