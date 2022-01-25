@@ -5,9 +5,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
-time.sleep(25)
+time.sleep(45)
 print('\n\n\n\n\n\n== paju_KMH ==')
-print('25 delayed')
+print('45 delayed')
 
 print('step 1')
 chrome_options = webdriver.ChromeOptions()
