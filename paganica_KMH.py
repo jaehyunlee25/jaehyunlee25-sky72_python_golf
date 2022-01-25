@@ -6,7 +6,7 @@ from datetime import datetime
 import time
 
 time.sleep(45)
-print('\n\n\n\n\n\n== paju_KMH ==')
+print('\n\n\n\n\n\n== paganica_KMH ==')
 print('45 delayed')
 
 print('step 1')
@@ -29,13 +29,13 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 # addr = 'http://www.sky72.com/kr/reservation/real_step02_search_datelist.jsp?' + timestamp + '&mode=&resTabno=1&flagcd2=7&holecd=2&daykind=&sort=date&wdate_2=&wcrs_2=&page_init=Y&gb=&wcrs_sel=&fromDate=2021%2F12%2F14&toDate=2022%2F01%2F13'
 # print(addr)
 
-f = open('paju_KMH.js', 'r')
+f = open('paganica_KMH.js', 'r')
 con = f.read()
 f.close()
 
 print('2.0. selenium start')
 while True:
-    print('\n\n\n\n\n\n== paju_KMH ==')
+    print('\n\n\n\n\n\n== paganica_KMH ==')
     print('3.0. while start')
     driver.get('https://paju.kmhleisure.com/Reservation/Reservation.aspx?choiceGolf=109')
     driver.implicitly_wait(3)
