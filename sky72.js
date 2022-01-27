@@ -72,7 +72,7 @@ function procGolfSchedule() {
 		obj.date = obj.date.gh(4) + '-' + obj.date.ch(4).gh(2) + '-' + obj.date.gt(2);
 	});
 	console.log(golf_schedule);
-	const param = { golf_schedule };
+	const param = { golf_schedule, golf_club_id: clubId };
 	post(addrOuter, param, header, () => {});
 };
 function procStatusDetailData(data, option) {
