@@ -9,12 +9,13 @@ var endDate = getToday(new Date(now.setMonth(now.getMonth() + 1)));
 var param = "fromDate=" + startDate + "&toDate=" + endDate;
 var clubId = '22b9c7f6-60f5-11ec-a49a-0242ac11000b';
 var courseName = {
-	A: '하늘코스',
-	B: '레이크코스',
-	C: '클래식코스',
-	D: '오션코스',
+	A: '913cc460-60f5-11ec-a49a-0242ac11000b', // '하늘코스',
+	B: '913cc7f1-60f5-11ec-a49a-0242ac11000b', // '레이크코스',
+	C: '913cc8a5-60f5-11ec-a49a-0242ac11000b', // '클래식코스',
+	D: '913cc8e3-60f5-11ec-a49a-0242ac11000b', // '오션코스',
 };
 var OUTER_ADDR_HEADER = 'http://dev.mnemosyne.co.kr:1006';
+const golf_schedule = [];
 
 // 15초마다 golf_status 정보를 불러온다.
 // var timer = setInterval(() => {}, 15 * 1000);
@@ -30,33 +31,84 @@ function callDeatailData(options) {
 	var cnt = 0;
 
 	var timer_detail = setInterval(() => {
-		// dateListId1.innerHTML = "11";
-		var addr = 'http://www.sky72.com/kr/reservation/real_step01_cal_ttime_total.jsp?';
-		var option = options[cnt];
-		console.log(cnt, lmt);
-		console.log(option);
-		var param = 'date=' + option.date + '&course=' + option.course + '&flagcd2=7&holecd=2&resTabno=1&wtime1=&gfee1=&weekgb1=&daykind=&tcnt=11';
+		// var addr = 'http://www.sky72.com/kr/reservation/real_step01_cal_ttime_total.jsp?';
+		// var param = 'date=' + option.date + '&course=' + option.course + '&flagcd2=7&holecd=2&resTabno=1&wtime1=&gfee1=&weekgb1=&daykind=&tcnt=11';
+		var addr = 'http://www.sky72.com/kr/reservation/real_step02.jsp';
+		var option = options[cnt];		
+		console.log("get data:", cnt + '/' + (lmt - 1), option.date);
+		var param = {
+			mode: '',
+			resTabno: 1,
+			weekgb: 'D',
+			weekNo: '',
+			wcrs: option.course,
+			wdate: option.date,
+			wtime: '',
+			course2: option.course,
+			flagcd2: 7,
+			holecd: 2,
+			daygb: 'D',
+			isTCardDay: '',
+			dateGap: 0,
+			modalPass: 'N',
+			eventGB2: '',
+		};
 		ajax(addr, param, (data) => {
 			procStatusDetailData(data, option);
 		});
 		cnt ++;
 
-		// test
-		// if (cnt > 0) clearInterval(timer_detail);
-		// test
-
 		if (cnt > lmt - 1) {
 			clearInterval(timer_detail);
-			var addrOuter = OUTER_ADDR_HEADER + '/api/reservation/detailCircuitEnd';
-			var header = { "Content-Type": "application/json" };
-			var param = { golf_club_id: clubId };
-			post(addrOuter, param, header, () => {});	
+			procGolfSchedule();
 		}
 	}, 300);
 };
+function procGolfSchedule() {
+	const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/golfSchedule';
+	const header = { "Content-Type": "application/json" };
+	golf_schedule.forEach((obj) => {
+		obj.golf_course_id = courseName[obj.golf_course_id];
+		obj.date = obj.date.gh(4) + '-' + obj.date.ch(4).gh(2) + '-' + obj.date.gt(2);
+	});
+	console.log(golf_schedule);
+	const param = { golf_schedule };
+	post(addrOuter, param, header, () => {});
+};
 function procStatusDetailData(data, option) {
-	$("#dateListId1").html(data);
-	var trs = Array.from(dateListId1.getElementsByTagName('tr'));
+	// $("#dateListId1").html(data);
+	const ifr = document.createElement('div');
+	ifr.innerHTML = data;
+
+	const tables = ifr.getElementsByClassName('timelistTable');
+	Array.from(tables).forEach((table) => {
+		procTable(table);
+	});
+
+	function procTable(table) {
+		const trs = table.getElementsByTagName('tr');		
+		Array.from(trs).forEach((tr) => {
+			if (tr.className !== 'gColor') return;
+			procTr(tr);
+		});
+	};
+	function procTr(tr) {
+		const tds = tr.getElementsByTagName('td');
+		golf_schedule.push({
+			golf_club_id: clubId,
+			golf_course_id: option.course,
+			date: option.date,
+			time: tds[1].innerText.replace(/\s/g,''),
+			in_out: tds[2].innerText.replace(/\s/g,'').replace(/\(\)/,''),
+			persons: tds[3].innerText.replace(/\s/g,'').replace(/\(\)/,''),
+			fee_normal: tds[4].innerText.replace(/\s/g,'').replace(/,/,'') * 1,
+			fee_discount: tds[5].innerText.replace(/\s/g,'').replace(/,/,'') * 1,
+			others: '',
+		});
+	};
+	
+
+	/* var trs = Array.from(dateListId1.getElementsByTagName('tr'));
 	var res = [];
 	var date = option.date.gh(4) + '-' + option.date.ch(4).gh(2) + '-' + option.date.gt(2);
 	var course = courseName[option.course];
@@ -67,9 +119,9 @@ function procStatusDetailData(data, option) {
 			teams: tr.children[1].children[0].innerHTML.ct(1) * 1,
 			greenFee: tr.children[2].innerHTML.replace(/,/g, '') * 1,
 		});
-	});
+	}); */
 
-	var addrOuter = OUTER_ADDR_HEADER + '/api/reservation/newGolfStatusDetail';
+	/* var addrOuter = OUTER_ADDR_HEADER + '/api/reservation/newGolfStatusDetail';
 	var header = { "Content-Type": "application/json" };
 	var param = { 
 		golf_club_id: clubId,
@@ -77,11 +129,14 @@ function procStatusDetailData(data, option) {
 		course,
 		data: res,
 	};
-	post(addrOuter, param, header, () => {});	
+	post(addrOuter, param, header, () => {});	 */
 };
 function procStatusData(data) {
-	$("#dateListId1").html(data);
-	var trs = Array.from(dateListId1.getElementsByTagName('tr'));
+	// $("#dateListId1").html(data);
+	const ifr = document.createElement("div");
+	ifr.innerHTML = data;
+	var trs = Array.from(ifr.getElementsByTagName('tr'));
+	
 	var res = [];
 	var options = [];
 	trs.forEach((tr, i) => {
@@ -105,13 +160,12 @@ function procStatusData(data) {
 		});		
 	});
 
-	var addrOuter = OUTER_ADDR_HEADER + '/api/reservation/newGolfStatuses';
-	// var addrOuter = 'http://jaehyunlee.co.kr:3000/api/reservation/newGolfStatuses';
+	/* var addrOuter = OUTER_ADDR_HEADER + '/api/reservation/newGolfStatuses';
 	var header = { "Content-Type": "application/json" };
 	var param = { golf_club_id: clubId, data: res };
 	post(addrOuter, param, header, () => {});
 	var result = JSON.stringify(res);
-	dateListId1.innerHTML = result;
+	dateListId1.innerHTML = result; */
 
 	// detail data 호출
 	callDeatailData(options);

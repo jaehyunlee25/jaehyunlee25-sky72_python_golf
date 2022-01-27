@@ -30,7 +30,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 # print(addr)
 
 print('1.0. javascript call')
-f = open('crawler.js', 'r')
+f = open('sky72.js', 'r')
 con = f.read()
 f.close()
 
