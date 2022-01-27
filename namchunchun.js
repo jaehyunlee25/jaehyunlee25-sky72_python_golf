@@ -1,7 +1,11 @@
 
 const clubId = 'd26b37e1-7437-11ec-b15c-0242ac110005';
-const courses = { challenge: 'Challenge 코스', victory: 'Victory 코스'};
+const courses = { 
+	challenge: '9a7f66ea-7438-11ec-b15c-0242ac110005', // 'Challenge 코스', 
+	victory: '9a7f6471-7438-11ec-b15c-0242ac110005', // 'Victory 코스'
+};
 const OUTER_ADDR_HEADER = 'https://dev.mnemosyne.co.kr';
+const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/golfSchedule';
 const header = { "Content-Type": "application/json" };
 
 const now = new Date();
@@ -17,6 +21,7 @@ const nextdate = nextyear + nextmonth;
 console.log(thisdate, nextdate);
 const dates = [];
 const result = [];
+const golf_schedule = [];
 
 mneCall(thisdate, () => {
     mneCall(nextdate, procDate);
@@ -123,17 +128,28 @@ function procDate() {
 	const lmt = dates.length - 1; 
 	let cnt = 0;
 	const timer = setInterval(() => {
-		console.log(cnt);
 		const [date, ] = dates[cnt];
+		console.log('수집하기', cnt + '/' + lmt, date);
 		mneCallDetail(cnt === lmt, date, procResultData);
 		cnt++;
 		// if(cnt > 0) clearInterval(timer);
-		if(cnt > lmt) clearInterval(timer);
+		if(cnt > lmt) {
+			clearInterval(timer);
+			procGolfSchedule();
+		}
 	}, 300);	
 };
+function procGolfSchedule() {
+	golf_schedule.forEach((obj) => {
+		obj.golf_course_id = courses[obj.golf_course_id];
+		obj.date = obj.date.gh(4) + '-' + obj.date.ch(4).gh(2) + '-' + obj.date.gt(2);
+	});
+	console.log(golf_schedule);
+	const param = { golf_schedule, golf_club_id: clubId };
+	post(addrOuter, param, header, () => {});
+};
 function mneCallDetail(opt, date, callback) {
-	console.log(date);
-	post('reservation_01_01.asp', {book_date_bd: date}, {}, data => {
+	post('reservation_01_01.asp', { book_date_bd: date }, {}, data => {
         const ifr = document.createElement('div');
         ifr.innerHTML = data;
         
@@ -144,29 +160,55 @@ function mneCallDetail(opt, date, callback) {
 					.children;
 		const [victory, challenge] = tds;
 		const obTeams = {victory: {}, challenge: {}};
+
 		// for victory course
 		Array.from(victory.children).forEach((div) => {
 			const str = div.innerText;
 			const time = str.gh(2);
-			if (obTeams.victory[time] === undefined) obTeams.victory[time] = [];
-			const greenfee = div.children[1].innerText.ch(1).replace(/,/g,'') * 1;
-			obTeams.victory[time].push({
+			// if (obTeams.victory[time] === undefined) obTeams.victory[time] = [];
+			const fee_discount = div.children[1].innerText.ch(1).replace(/,/g,'') * 1;
+			const fee_normal = div.children[0].innerText.ch(1).replace(/,/g,'') * 1;
+
+			golf_schedule.push({
+				golf_club_id: clubId,
+				golf_course_id: 'victory',
+				date,
+				time: str.gh(5),
+				in_out: '',
+				persons: '',
+				fee_normal,
+				fee_discount,
+				others: '',
+			});
+			/* obTeams.victory[time].push({
 				time: str.gh(5),
 				greenfee
-			});
+			}); */
 		});
 		// for challenge course
 		Array.from(challenge.children).forEach((div) => {
 			const str = div.innerText;
 			const time = str.gh(2);
-			if (obTeams.challenge[time] === undefined) obTeams.challenge[time] = [];
-			const greenfee = div.children[1].innerText.ch(1).replace(/,/g,'') * 1;
-			obTeams.challenge[time].push({
+			// if (obTeams.challenge[time] === undefined) obTeams.challenge[time] = [];
+			const fee_discount = div.children[1].innerText.ch(1).replace(/,/g,'') * 1;
+			const fee_normal = div.children[0].innerText.ch(1).replace(/,/g,'') * 1;
+			golf_schedule.push({
+				golf_club_id: clubId,
+				golf_course_id: 'challenge',
+				date,
+				time: str.gh(5),
+				in_out: '',
+				persons: '',
+				fee_normal,
+				fee_discount,
+				others: '',
+			});
+			/* obTeams.challenge[time].push({
 				time: str.gh(5),
 				greenfee
-			});
+			}); */
 		});        
-		callback(date, obTeams, opt);
+		// callback(date, obTeams, opt);
     });
 };
 function mneCall(date, callback) {

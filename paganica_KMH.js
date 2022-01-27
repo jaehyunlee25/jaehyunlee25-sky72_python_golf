@@ -93,8 +93,8 @@ function procDate() {
 	const lmt = dates.length - 1; 
 	let cnt = 0;
 	const timer = setInterval(() => {
-		console.log('수집하기', cnt + '/' + lmt);
 		const arrDate = dates[cnt];
+		console.log('수집하기', cnt + '/' + lmt, arrDate[0]);
 		mneCallDetail(cnt === lmt, arrDate, procResultData);
 		cnt++;
 		// if(cnt > 1) clearInterval(timer);

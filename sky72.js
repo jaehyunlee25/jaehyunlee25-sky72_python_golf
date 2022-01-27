@@ -15,28 +15,23 @@ var courseName = {
 	D: '913cc8e3-60f5-11ec-a49a-0242ac11000b', // '오션코스',
 };
 var OUTER_ADDR_HEADER = 'http://dev.mnemosyne.co.kr:1006';
+const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/golfSchedule';
+const header = { "Content-Type": "application/json" };
 const golf_schedule = [];
 
 // 15초마다 golf_status 정보를 불러온다.
 // var timer = setInterval(() => {}, 15 * 1000);
 ajax(addr, param, procStatusData);
 
-// test 용
-// ajax(addr, param, procStatusData);
-// clearInterval(timer);
-// test 용
-
 function callDeatailData(options) {
 	var lmt = options.length;
 	var cnt = 0;
 
 	var timer_detail = setInterval(() => {
-		// var addr = 'http://www.sky72.com/kr/reservation/real_step01_cal_ttime_total.jsp?';
-		// var param = 'date=' + option.date + '&course=' + option.course + '&flagcd2=7&holecd=2&resTabno=1&wtime1=&gfee1=&weekgb1=&daykind=&tcnt=11';
-		var addr = 'http://www.sky72.com/kr/reservation/real_step02.jsp';
-		var option = options[cnt];		
+		const addr = 'http://www.sky72.com/kr/reservation/real_step02.jsp';
+		const option = options[cnt];		
 		console.log("get data:", cnt + '/' + (lmt - 1), option.date);
-		var param = {
+		const param = {
 			mode: '',
 			resTabno: 1,
 			weekgb: 'D',
@@ -65,8 +60,6 @@ function callDeatailData(options) {
 	}, 300);
 };
 function procGolfSchedule() {
-	const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/golfSchedule';
-	const header = { "Content-Type": "application/json" };
 	golf_schedule.forEach((obj) => {
 		obj.golf_course_id = courseName[obj.golf_course_id];
 		obj.date = obj.date.gh(4) + '-' + obj.date.ch(4).gh(2) + '-' + obj.date.gt(2);
@@ -76,7 +69,6 @@ function procGolfSchedule() {
 	post(addrOuter, param, header, () => {});
 };
 function procStatusDetailData(data, option) {
-	// $("#dateListId1").html(data);
 	const ifr = document.createElement('div');
 	ifr.innerHTML = data;
 
@@ -106,33 +98,8 @@ function procStatusDetailData(data, option) {
 			others: '',
 		});
 	};
-	
-
-	/* var trs = Array.from(dateListId1.getElementsByTagName('tr'));
-	var res = [];
-	var date = option.date.gh(4) + '-' + option.date.ch(4).gh(2) + '-' + option.date.gt(2);
-	var course = courseName[option.course];
-	trs.forEach((tr, i) => {
-		if (i < 2) return;
-		res.push({
-			timeSlot: tr.children[0].innerHTML.replace(/\s/g, '').ct(2) + ":00:00",
-			teams: tr.children[1].children[0].innerHTML.ct(1) * 1,
-			greenFee: tr.children[2].innerHTML.replace(/,/g, '') * 1,
-		});
-	}); */
-
-	/* var addrOuter = OUTER_ADDR_HEADER + '/api/reservation/newGolfStatusDetail';
-	var header = { "Content-Type": "application/json" };
-	var param = { 
-		golf_club_id: clubId,
-		date,
-		course,
-		data: res,
-	};
-	post(addrOuter, param, header, () => {});	 */
 };
 function procStatusData(data) {
-	// $("#dateListId1").html(data);
 	const ifr = document.createElement("div");
 	ifr.innerHTML = data;
 	var trs = Array.from(ifr.getElementsByTagName('tr'));
@@ -159,13 +126,6 @@ function procStatusData(data) {
 				});
 		});		
 	});
-
-	/* var addrOuter = OUTER_ADDR_HEADER + '/api/reservation/newGolfStatuses';
-	var header = { "Content-Type": "application/json" };
-	var param = { golf_club_id: clubId, data: res };
-	post(addrOuter, param, header, () => {});
-	var result = JSON.stringify(res);
-	dateListId1.innerHTML = result; */
 
 	// detail data 호출
 	callDeatailData(options);
