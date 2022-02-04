@@ -5,9 +5,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
-time.sleep(45)
-print('\n\n\n\n\n\n== paganica_KMH ==')
-print('45 delayed')
+time.sleep(55)
+print('\n\n\n\n\n\n== uni_island ==')
+print('55 delayed')
 
 print('step 1')
 chrome_options = webdriver.ChromeOptions()
@@ -29,15 +29,15 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 # addr = 'http://www.sky72.com/kr/reservation/real_step02_search_datelist.jsp?' + timestamp + '&mode=&resTabno=1&flagcd2=7&holecd=2&daykind=&sort=date&wdate_2=&wcrs_2=&page_init=Y&gb=&wcrs_sel=&fromDate=2021%2F12%2F14&toDate=2022%2F01%2F13'
 # print(addr)
 
-f = open('paganica_KMH.js', 'r')
+f = open('uni_island.js', 'r')
 con = f.read()
 f.close()
 
 print('2.0. selenium start')
 while True:
-    print('\n\n\n\n\n\n== paganica_KMH ==')
+    print('\n\n\n\n\n\n== uni_island ==')
     print('3.0. while start')
-    driver.get('https://paganica.kmhleisure.com/Reservation/Reservation.aspx?choiceGolf=120')
+    driver.get('https://www.uniisland.com/Reservation/Reservation')
     driver.implicitly_wait(3)
     driver.execute_script(con)
     print('4.0. while sleep 57')
