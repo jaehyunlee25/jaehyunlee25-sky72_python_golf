@@ -6,7 +6,8 @@ var addr = "/kr/reservation/real_step02_search_datelist.jsp?" +  now.valueOf();
 // var param = $('#searchForm1').serialize();
 var startDate = getToday(now);
 var endDate = getToday(new Date(now.setMonth(now.getMonth() + 1)));
-var param = "fromDate=" + startDate + "&toDate=" + endDate;
+// var param = "fromDate=" + startDate + "&toDate=" + endDate;
+var param = {fromDate: startDate, toDate: endDate};
 var clubId = '22b9c7f6-60f5-11ec-a49a-0242ac11000b';
 var courseName = {
 	A: '913cc460-60f5-11ec-a49a-0242ac11000b', // '하늘코스',
@@ -164,13 +165,14 @@ function post(addr,param,header,callback){
 	a.ajaxcallback=callback;
 };
 function ajax(addr, param, callback) {
-	$.ajax({
+	/* $.ajax({
 		url : addr,
 		dataType : "html",
 		data : param,
 		success: callback,
 		error: onError
-	});
+	}); */
+	get(addr, param, {}, callback);
 };
 String.prototype.gt=function(num){
 	//get tail
@@ -198,6 +200,28 @@ Array.prototype.trav=function(fnc){
 		var a=fnc(this[i],i);
 		if(a) break;
 	}
+};
+function post(addr,param,header,callback){
+	var a=new ajaxcallforgeneral(),
+		str=[];
+	if(header["Content-Type"] == "application/json"){
+		str=JSON.stringify(param);
+	}else{
+		for(var el in param) str.push(el+"="+encodeURIComponent(param[el]));
+		str=str.join("&");		
+	}
+	a.post(addr,str,header);
+	a.ajaxcallback=callback;
+};
+function get(addr,param,header,callback){
+	var a=new ajaxcallforgeneral(),
+		str=[];
+	for(var el in param){
+		str.push(el+"="+param[el]);
+	}
+	str=str.join("&");
+	a.jAjax(addr+"?"+str, header);
+	a.ajaxcallback=callback;
 };
 function ajaxcallforgeneral(){
 	this.xmlHttp;
