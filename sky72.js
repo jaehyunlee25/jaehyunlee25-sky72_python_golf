@@ -174,6 +174,12 @@ function ajax(addr, param, callback) {
 	}); */
 	get(addr, param, {}, callback);
 };
+Array.prototype.trav=function(fnc){
+	for(var i=0,lng=this.length;i<lng;i++){
+		var a=fnc(this[i],i);
+		if(a) break;
+	}
+};
 String.prototype.gt=function(num){
 	//get tail
 	return this.substring(this.length-num,this.length);
