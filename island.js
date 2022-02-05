@@ -109,13 +109,10 @@ function procDate() {
   const timer = setInterval(() => {
     const [date] = dates[cnt];
 	console.log('수집하기', cnt + '/' + lmt, date);
-    mneCallDetail(cnt === lmt, date, procResultData);
+    mneCallDetail(cnt === lmt, date, procGolfSchedule);
     cnt++;
-    // if(cnt > 1) clearInterval(timer);
-    if(cnt > lmt) {
-		clearInterval(timer);
-		procGolfSchedule();
-	}
+    // if(cnt > 0) clearInterval(timer);
+    if(cnt > lmt)  clearInterval(timer);
   }, 300);
 }
 function procGolfSchedule() {
@@ -133,35 +130,36 @@ function mneCallDetail(opt, date, callback) {
     const ifr = document.createElement('div');
     ifr.innerHTML = data;
 
-    const lis = ifr.getElementsByTagName('li');
-    const obTeams = {};
-    Array.from(lis).forEach((li) => {
-      if (li.children.length !== 1 || li.children[0].tagName !== 'BUTTON')
-        return;
-      const [btn] = li.children;
-      const ob = procStrDetail(btn.onclick.toString());
+    const as = ifr.getElementsByTagName('a');
+    // const obTeams = {};
+    Array.from(as).forEach((a) => {
+      const str = a.getAttribute('href');
+      if(!str || str.indexOf('JavaScript:Book_') === -1) return;
+
+      const ob = procStrDetail(str);
       const { course, time, fee_normal, fee_discount } = ob;
       const slot = time.gh(2);
-      if (!obTeams[course]) obTeams[course] = {};
-      if (!obTeams[course][slot]) obTeams[course][slot] = [];
+      /* if (!obTeams[course]) obTeams[course] = {};
+      if (!obTeams[course][slot]) obTeams[course][slot] = []; */
 
-	  golf_schedule.push({
-		golf_club_id: clubId,
-		golf_course_id: course,
-		date,
-		time,
-		in_out: '',
-		persons: '',
-		fee_normal,
-		fee_discount,
-		others: '',
-	  });
+      golf_schedule.push({
+        golf_club_id: clubId,
+        golf_course_id: course,
+        date,
+        time,
+        in_out: '',
+        persons: '',
+        fee_normal,
+        fee_discount,
+        others: '',
+      });
       /* obTeams[course][slot].push({
         time,
         greenfee,
       }); */
     });
     // callback(date, obTeams, opt);
+    if(opt) callback();
   });
 }
 function mneCall(date, callback) {
@@ -170,13 +168,14 @@ function mneCall(date, callback) {
     const ifr = document.createElement('div');
     ifr.innerHTML = data;
 
-    const tds = ifr.getElementsByClassName('book');
-    Array.from(tds).forEach((td) => {
-      if (td.tagName !== 'TD') return;
-      const a = td.children[0];
-      const ob = procStr(a.onclick.toString());
+    const as = ifr.getElementsByTagName('a');
+    Array.from(as).forEach((a) => {
+      const str = a.getAttribute('href');
+      if(!str || str.indexOf('JavaScript:Date_Click') === -1) return;
+      const ob = procStr(str);
       dates.push([ob.date, 0]);
     });
+
     callback();
   });
 }

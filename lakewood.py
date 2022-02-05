@@ -41,7 +41,6 @@ con = f.read()
 f.close()
 
 con += common
-print(con)
 
 print('2.0. selenium start')
 while True:
