@@ -30,7 +30,7 @@ function callDeatailData(options) {
 	var callbackNumber = -1;
 
 	var timer_detail = setInterval(() => {
-		const addr = 'https://www.sky72.com/kr/reservation/real_step02.jsp';
+		const addr = 'http://www.sky72.com/kr/reservation/real_step02.jsp';
 		const option = options[cnt];		
 		console.log("get data:", cnt + '/' + lmt, option.date);
 		const param = {

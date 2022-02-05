@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
@@ -19,8 +21,15 @@ chrome_options.add_argument("--disable-web-security")
 chrome_options.add_argument("--disable-site-isolation-trials")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
+d = DesiredCapabilities.CHROME
+d['loggingPrefs'] = { 'browser':'ALL' }
+
 print('step 2')
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+driver = webdriver.Chrome(
+    service=Service(ChromeDriverManager().install()), 
+    desired_capabilities=d,
+    options=chrome_options
+)
 
 # driver.implicitly_wait(15)
 
@@ -38,9 +47,12 @@ print('2.0. selenium start')
 while True:
     print('\n\n\n\n\n\n== sky72 ==')
     print('3.0. while start')
-    driver.get('https://www.sky72.com/kr/reservation/real_step01_search.jsp')
+    driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
     driver.implicitly_wait(5)
     driver.execute_script(con)
+    # browser console.log
+    for entry in driver.get_log('browser'):
+        print(entry)
     print('4.0. while sleep 57')
     time.sleep(57)
 
