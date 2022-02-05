@@ -38,7 +38,7 @@ driver.get('https://www.skyvalley.co.kr/hilldeloci/member/login')
 driver.implicitly_wait(3)
 driver.execute_script(lcon)
 driver.implicitly_wait(3)
-zz
+
 f = open('hilldeloci.js', 'r')
 con = f.read()
 f.close()
