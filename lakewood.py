@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
-# time.sleep(13)
+time.sleep(13)
 print('\n\n\n\n\n\n== lakewood ==')
 print('13 delayed')
 
