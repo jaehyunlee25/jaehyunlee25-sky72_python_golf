@@ -5,7 +5,7 @@ now.setHours(now.getHours() + 9); // set 'Asia/Seoul'
 var addr = "/kr/reservation/real_step02_search_datelist.jsp?" +  now.valueOf();
 // var param = $('#searchForm1').serialize();
 var startDate = getToday(now);
-var endDate = getToday(new Date(now.setMonth(now.getMonth() + 1)));
+var endDate = getToday(new Date(now.setMonth(now.getMonth() + 2)));
 // var param = "fromDate=" + startDate + "&toDate=" + endDate;
 var param = {fromDate: startDate, toDate: endDate};
 var clubId = '22b9c7f6-60f5-11ec-a49a-0242ac11000b';
@@ -25,13 +25,14 @@ const golf_schedule = [];
 ajax(addr, param, procStatusData);
 
 function callDeatailData(options) {
-	var lmt = options.length;
+	var lmt = options.length - 1;
 	var cnt = 0;
+	var callbackNumber = -1;
 
 	var timer_detail = setInterval(() => {
 		const addr = 'http://www.sky72.com/kr/reservation/real_step02.jsp';
 		const option = options[cnt];		
-		console.log("get data:", cnt + '/' + (lmt - 1), option.date);
+		console.log("get data:", cnt + '/' + lmt, option.date);
 		const param = {
 			mode: '',
 			resTabno: 1,
@@ -50,14 +51,12 @@ function callDeatailData(options) {
 			eventGB2: '',
 		};
 		ajax(addr, param, (data) => {
-			procStatusDetailData(data, option);
+			callbackNumber++;
+			procStatusDetailData(callbackNumber===lmt, data, option, procGolfSchedule);
 		});
 		cnt ++;
 
-		if (cnt > lmt - 1) {
-			clearInterval(timer_detail);
-			procGolfSchedule();
-		}
+		if (cnt > lmt)  clearInterval(timer_detail);
 	}, 300);
 };
 function procGolfSchedule() {
@@ -69,19 +68,22 @@ function procGolfSchedule() {
 	const param = { golf_schedule, golf_club_id: clubId };
 	post(addrOuter, param, header, () => {});
 };
-function procStatusDetailData(data, option) {
+function procStatusDetailData(opt, data, option, callback) {	
+
 	const ifr = document.createElement('div');
 	ifr.innerHTML = data;
-
+	
 	const tables = ifr.getElementsByClassName('timelistTable');
 	Array.from(tables).forEach((table) => {
 		procTable(table);
 	});
 
+	if(opt) callback();
+	
 	function procTable(table) {
 		const trs = table.getElementsByTagName('tr');		
 		Array.from(trs).forEach((tr) => {
-			if (tr.className !== 'gColor') return;
+			if (tr.getAttribute('eventdata') === null) return;
 			procTr(tr);
 		});
 	};
