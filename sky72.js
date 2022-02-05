@@ -97,7 +97,7 @@ function procStatusDetailData(opt, data, option, callback) {
 			in_out: tds[2].innerText.replace(/\s/g,'').replace(/\(\)/,''),
 			persons: tds[3].innerText.replace(/\s/g,'').replace(/\(\)/,''),
 			fee_normal: tds[4].innerText.replace(/\s/g,'').replace(/,/,'') * 1,
-			fee_discount: tds[5].innerText.replace(/\s/g,'').replace(/,/,'') * 1,
+			fee_discount: tds[5].innerText.replace(/\s/g,'').replace(/,/,'') * 1 || 0,
 			others: '',
 		});
 	};
