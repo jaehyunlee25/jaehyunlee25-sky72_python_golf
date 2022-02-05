@@ -31,6 +31,13 @@ driver.get('https://lakewood.co.kr/member/login')
 driver.implicitly_wait(3)
 driver.execute_script(lcon)
 driver.implicitly_wait(3)
+try:
+    result = driver.switch_to_alert()
+    print(result.text)
+    result.accept()
+    result.dismiss()
+except:
+    'There is no alert'
 
 f = open('common.js', 'r')
 common = f.read()
