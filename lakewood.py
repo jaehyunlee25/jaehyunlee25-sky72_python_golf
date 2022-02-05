@@ -5,9 +5,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
-time.sleep(3)
-print('\n\n\n\n\n\n== hilldeloci ==')
-print('3 delayed')
+# time.sleep(13)
+print('\n\n\n\n\n\n== lakewood ==')
+print('13 delayed')
 
 print('step 1')
 chrome_options = webdriver.ChromeOptions()
@@ -22,42 +22,34 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 print('step 2')
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-# driver.implicitly_wait(15)
-
-# timestamp = str(int(time.mktime(datetime.today().timetuple()))) + '450'
-# driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
-# addr = 'http://www.sky72.com/kr/reservation/real_step02_search_datelist.jsp?' + timestamp + '&mode=&resTabno=1&flagcd2=7&holecd=2&daykind=&sort=date&wdate_2=&wcrs_2=&page_init=Y&gb=&wcrs_sel=&fromDate=2021%2F12%2F14&toDate=2022%2F01%2F13'
-# print(addr)
-
 print('1.0. javascript call')
-l = open('hilldeloci_login.js', 'r')
+l = open('lakewood_login.js', 'r')
 lcon = l.read()
 l.close()
 
-driver.get('https://www.skyvalley.co.kr/hilldeloci/member/login')
+driver.get('https://lakewood.co.kr/member/login')
 driver.implicitly_wait(3)
 driver.execute_script(lcon)
 driver.implicitly_wait(3)
-zz
-f = open('hilldeloci.js', 'r')
+
+f = open('common.js', 'r')
+common = f.read()
+f.close()
+
+f = open('lakewood.js', 'r')
 con = f.read()
 f.close()
 
+con += common
+print(con)
+
 print('2.0. selenium start')
 while True:
-    print('\n\n\n\n\n\n== hilldeloci ==')
+    print('\n\n\n\n\n\n== lakewood ==')
     print('3.0. while start')
-    driver.get('https://www.skyvalley.co.kr/hilldeloci/reservation/golf')
+    driver.get('https://lakewood.co.kr/reservation/golf')
     driver.implicitly_wait(3)
     driver.execute_script(con)
 
     print('4.0. while sleep 57')
     time.sleep(57)
-
-""" 
-result = driver.find_element(By.TAG_NAME, 'body')
-print('body') 
-print(result.get_attribute('innerHTML'))
-"""
-
-# driver.quit()

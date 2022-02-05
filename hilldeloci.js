@@ -170,7 +170,7 @@ function mneCallDetail(opt, date, callback) {
         persons: '',
         fee_normal,
         fee_discount,
-        others: '',
+        others: '9홀',
       });
       /* obTeams[course][slot].push({
         time,
