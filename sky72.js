@@ -15,7 +15,7 @@ var courseName = {
 	C: '913cc8a5-60f5-11ec-a49a-0242ac11000b', // '클래식코스',
 	D: '913cc8e3-60f5-11ec-a49a-0242ac11000b', // '오션코스',
 };
-var OUTER_ADDR_HEADER = 'http://dev.mnemosyne.co.kr:1006';
+var OUTER_ADDR_HEADER = 'https://dev.mnemosyne.co.kr';
 const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/golfSchedule';
 const header = { "Content-Type": "application/json" };
 const golf_schedule = [];
@@ -30,7 +30,7 @@ function callDeatailData(options) {
 	var callbackNumber = -1;
 
 	var timer_detail = setInterval(() => {
-		const addr = 'http://www.sky72.com/kr/reservation/real_step02.jsp';
+		const addr = 'https://www.sky72.com/kr/reservation/real_step02.jsp';
 		const option = options[cnt];		
 		console.log("get data:", cnt + '/' + lmt, option.date);
 		const param = {

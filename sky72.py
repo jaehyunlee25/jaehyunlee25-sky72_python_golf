@@ -38,7 +38,7 @@ print('2.0. selenium start')
 while True:
     print('\n\n\n\n\n\n== sky72 ==')
     print('3.0. while start')
-    driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
+    driver.get('https://www.sky72.com/kr/reservation/real_step01_search.jsp')
     driver.implicitly_wait(5)
     driver.execute_script(con)
     print('4.0. while sleep 57')
