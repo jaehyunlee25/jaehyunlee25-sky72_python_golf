@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
-time.sleep(23)
+# time.sleep(23)
 print('\n\n\n\n\n\n== jinyang_valley ==')
 print('23 delayed')
 
@@ -30,7 +30,8 @@ l.close()
 driver.get('https://www.chinyangvalley.co.kr/member/login.asp')
 driver.implicitly_wait(3)
 driver.execute_script(lcon)
-driver.implicitly_wait(3)
+time.sleep(5)
+
 try:
     result = driver.switch_to_alert()
     print(result.text)

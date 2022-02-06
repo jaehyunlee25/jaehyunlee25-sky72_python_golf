@@ -33,7 +33,7 @@ function ajaxcallforgeneral() {
     j.xmlHttp.onerror = onError;
     j.xmlHttp.open('GET', address, true);
     if (header) {
-      Object.keys(header).trav((key) => {
+      Object.keys(header).forEach((key) => {
         var val = header[key];
         j.xmlHttp.setRequestHeader(key, val);
       });
@@ -52,7 +52,7 @@ function ajaxcallforgeneral() {
     //j.xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     if (header) {
       if (header['Content-Type'])
-        Object.keys(header).trav((key) => {
+        Object.keys(header).forEach((key) => {
           var val = header[key];
           j.xmlHttp.setRequestHeader(key, val);
         });
