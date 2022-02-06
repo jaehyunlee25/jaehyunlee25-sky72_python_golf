@@ -30,7 +30,7 @@ l.close()
 driver.get('https://www.lakeside.kr/login/login.do')
 driver.implicitly_wait(3)
 driver.execute_script(lcon)
-time.sleep(5)
+# time.sleep(5)
 
 try:
     result = driver.switch_to_alert()
