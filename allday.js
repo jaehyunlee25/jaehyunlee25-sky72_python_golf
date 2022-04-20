@@ -66,7 +66,7 @@ function mneCallDetail(date) {
     const dict = {A: 'Mountain', B: 'Lake', C: 'Valley'};
     objResp.forEach((obj) => {
       const course = dict[obj.BK_COS];
-      const time = obj.BK_TIME;
+      const time = obj.BK_TIME.gh(2) + ":" + obj.BK_TIME.gt(2);
       const fee_normal = obj.BK_BASIC_CHARGE.replace(/\,/g, '') * 1;
       const fee_discount = obj.BK_CHARGE.replace(/\,/g, '') * 1;
       

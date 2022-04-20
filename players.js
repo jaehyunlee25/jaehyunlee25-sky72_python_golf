@@ -63,7 +63,7 @@ function mneCallDetail(date) {
     const dict = {1: 'VALLEY', 2: 'LAKE', 3: 'MOUNTAIN'};
     objResp.forEach((obj) => {
       const course = dict[obj.course];
-      const time = obj.time;
+      const time = obj.time.gh(2) + ":" + obj.time.gt(2);
       const fee_normal = obj.gf_ori * 1;
       const fee_discount = obj.gf_dis * 1;
       
