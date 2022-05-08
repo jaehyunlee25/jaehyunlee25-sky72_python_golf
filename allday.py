@@ -9,7 +9,6 @@ import time
 
 time.sleep(0)
 print('\n\n\n\n\n\n== players ==')
-print('3 delayed')
 
 print('step 1')
 chrome_options = webdriver.ChromeOptions()

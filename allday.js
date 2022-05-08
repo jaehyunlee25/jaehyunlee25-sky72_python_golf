@@ -41,7 +41,6 @@ function procDate() {
 	  console.log('수집하기', cnt + '/' + lmt, date);
     mneCallDetail(date);
     cnt++;
-    // if(cnt > 0) clearInterval(timer);
   }, 300);
 }
 function procGolfSchedule() {
