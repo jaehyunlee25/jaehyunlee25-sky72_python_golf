@@ -27,51 +27,33 @@ mneCall(thisdate, () => {
   mneCall(nextdate, procDate);
 });
 
-function mneCall(date, callback) {
-  console.log(date);
-  const param = {
-    golfResType: 'real',
-    schDate: date,
-    usrMemCd: '21',
-    toDay: date + '01',
-    calNum: 1,
-    inputType: 'M',
-    recaptchaToken: '',
-  };
-  post('/reservation/calendar/ajax_realtime_calendar_view.do', param, {}, (data) => {
-    const ifr = document.createElement('div');
-    ifr.innerHTML = data;
-
-    const as = ifr.getElementsByTagName('a');
-    Array.from(as).forEach((a) => {
-      const str = a.getAttribute('href');
-      if(str.indexOf('javascript:timefrom_change(') === -1) return;
-      const ob = procStr(str);
-      if(!ob.available) return;
-      dates.push([ob.date, 0]);
-    });
-    callback();
-  });
-};
-function procStr(str) {
-  const regex = /javascript:timefrom_change\((.+)\)/;
-  const values = regex.exec(str)[1].replace(/'/g, '').split(',');
-  return { date: values[0], available: values[5] === 'T' };
-};
 function procDate() {
   const lmt = dates.length - 1;
   let cnt = 0;  
 
   const timer = setInterval(() => {
+    // 마지막 수신 데이터까지 처리하기 위해 종료조건이 상단에 위치한다.
+    if (cnt > lmt) {
+      clearInterval(timer);
+      procGolfSchedule();
+      return;
+    }
     const [date] = dates[cnt];
 	  console.log('수집하기', cnt + '/' + lmt, date);
-    mneCallDetail(lmt, date, procGolfSchedule);
+    mneCallDetail(date);
     cnt++;
-    // if(cnt > 0) clearInterval(timer);
-    if(cnt > lmt)  clearInterval(timer);
   }, 300);
 };
-function mneCallDetail(lmt, date, callback) {
+function procGolfSchedule() {
+	golf_schedule.forEach((obj) => {
+		obj.golf_course_id = courses[obj.golf_course_id];
+		obj.date = obj.date.gh(4) + '-' + obj.date.ch(4).gh(2) + '-' + obj.date.gt(2);
+	});
+	console.log(golf_schedule);
+	const param = { golf_schedule, golf_club_id: clubId };
+	post(addrOuter, param, header, () => {});
+};
+function mneCallDetail(date) {
   const param = { 
     golfResType: 'real',
     courseId: 0,
@@ -111,16 +93,39 @@ function mneCallDetail(lmt, date, callback) {
         others: '18홀',
       });
     });
-
-    if(callbackNumber === lmt) callback();
   });
 };
-function procGolfSchedule() {
-	golf_schedule.forEach((obj) => {
-		obj.golf_course_id = courses[obj.golf_course_id];
-		obj.date = obj.date.gh(4) + '-' + obj.date.ch(4).gh(2) + '-' + obj.date.gt(2);
-	});
-	console.log(golf_schedule);
-	const param = { golf_schedule, golf_club_id: clubId };
-	post(addrOuter, param, header, () => {});
+function mneCall(date, callback) {
+  console.log(date);
+  const param = {
+    golfResType: 'real',
+    schDate: date,
+    usrMemCd: '21',
+    toDay: date + '01',
+    calNum: 1,
+    inputType: 'M',
+    recaptchaToken: '',
+  };
+  post('/reservation/calendar/ajax_realtime_calendar_view.do', param, {}, (data) => {
+    const ifr = document.createElement('div');
+    ifr.innerHTML = data;
+
+    const as = ifr.getElementsByTagName('a');
+    Array.from(as).forEach((a) => {
+      const str = a.getAttribute('href');
+      if(str.indexOf('javascript:timefrom_change(') === -1) return;
+      const ob = procStr(str);
+      if(!ob.available) return;
+      dates.push([ob.date, 0]);
+    });
+    callback();
+  });
 };
+function procStr(str) {
+  const regex = /javascript:timefrom_change\((.+)\)/;
+  const values = regex.exec(str)[1].replace(/'/g, '').split(',');
+  return { date: values[0], available: values[5] === 'T' };
+};
+
+
+

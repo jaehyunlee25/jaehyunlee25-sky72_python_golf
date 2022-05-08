@@ -29,35 +29,34 @@ mneCall(thisdate, () => {
   mneCall(nextdate, procDate);
 }); // island cc는 날짜지정없이 무조건 오늘기준으로 한 달치를 보여줌
 
-function mneCall(date, callback) {
-  const param = {
-    method: 'getCalendar',
-    coDiv: 880,
-    selYm: date,
-  };
-  get('/controller/ReservationController.asp', param, {}, (data) => {
-    const arRes = JSON.parse(data).rows;
-    arRes.forEach((ob) => {
-      if(ob.BK_TEAM === "0") return;
-      dates.push([ob.CL_SOLAR, 0]);
-    });
-    callback();
-  });
-};
 function procDate() {
   const lmt = dates.length - 1;
   let cnt = 0;  
 
   const timer = setInterval(() => {
+    // 마지막 수신 데이터까지 처리하기 위해 종료조건이 상단에 위치한다.
+    if (cnt > lmt) {
+      clearInterval(timer);
+      procGolfSchedule();
+      return;
+    }
+    // 데이터 수집
     const [date] = dates[cnt];
 	  console.log('수집하기', cnt + '/' + lmt, date);
-    mneCallDetail(lmt, date, procGolfSchedule);
+    mneCallDetail(date);
     cnt++;
-    // if(cnt > 0) clearInterval(timer);
-    if(cnt > lmt)  clearInterval(timer);
   }, 300);
 };
-function mneCallDetail(lmt, date, callback) {
+function procGolfSchedule() {
+	golf_schedule.forEach((obj) => {
+		obj.golf_course_id = courses[obj.golf_course_id];
+		obj.date = obj.date.gh(4) + '-' + obj.date.ch(4).gh(2) + '-' + obj.date.gt(2);
+	});
+	console.log(golf_schedule);
+	const param = { golf_schedule, golf_club_id: clubId };
+	post(addrOuter, param, header, () => {});
+};
+function mneCallDetail(date) {
   const param = { 
     method: 'getTeeList',
     coDiv: 880,
@@ -86,15 +85,20 @@ function mneCallDetail(lmt, date, callback) {
         others: '9홀',
       });
     });
-    if(callbackNumber === lmt) callback();
   });
 };
-function procGolfSchedule() {
-	golf_schedule.forEach((obj) => {
-		obj.golf_course_id = courses[obj.golf_course_id];
-		obj.date = obj.date.gh(4) + '-' + obj.date.ch(4).gh(2) + '-' + obj.date.gt(2);
-	});
-	console.log(golf_schedule);
-	const param = { golf_schedule, golf_club_id: clubId };
-	post(addrOuter, param, header, () => {});
+function mneCall(date, callback) {
+  const param = {
+    method: 'getCalendar',
+    coDiv: 880,
+    selYm: date,
+  };
+  get('/controller/ReservationController.asp', param, {}, (data) => {
+    const arRes = JSON.parse(data).rows;
+    arRes.forEach((ob) => {
+      if(ob.BK_TEAM === "0") return;
+      dates.push([ob.CL_SOLAR, 0]);
+    });
+    callback();
+  });
 };

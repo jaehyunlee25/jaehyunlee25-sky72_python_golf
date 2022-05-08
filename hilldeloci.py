@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 
-time.sleep(3)
+time.sleep(0)
 print('\n\n\n\n\n\n== hilldeloci ==')
 print('3 delayed')
 
@@ -15,19 +15,12 @@ chrome_options.add_argument('headless')
 chrome_options.add_argument('window-size=1920x1080')
 chrome_options.add_argument('disable-gpu')
 chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument("--disable-web-security")
-chrome_options.add_argument("--disable-site-isolation-trials")
-chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument('--disable-web-security')
+chrome_options.add_argument('--disable-site-isolation-trials')
+chrome_options.add_argument('--disable-dev-shm-usage')
 
 print('step 2')
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-
-# driver.implicitly_wait(15)
-
-# timestamp = str(int(time.mktime(datetime.today().timetuple()))) + '450'
-# driver.get('http://www.sky72.com/kr/reservation/real_step01_search.jsp')
-# addr = 'http://www.sky72.com/kr/reservation/real_step02_search_datelist.jsp?' + timestamp + '&mode=&resTabno=1&flagcd2=7&holecd=2&daykind=&sort=date&wdate_2=&wcrs_2=&page_init=Y&gb=&wcrs_sel=&fromDate=2021%2F12%2F14&toDate=2022%2F01%2F13'
-# print(addr)
 
 print('1.0. javascript call')
 l = open('hilldeloci_login.js', 'r')
@@ -39,9 +32,15 @@ driver.implicitly_wait(3)
 driver.execute_script(lcon)
 driver.implicitly_wait(3)
 
+f = open('common.js', 'r')
+common = f.read()
+f.close()
+
 f = open('hilldeloci.js', 'r')
 con = f.read()
 f.close()
+
+con += common
 
 print('2.0. selenium start')
 while True:
@@ -53,11 +52,5 @@ while True:
 
     print('4.0. while sleep 57')
     time.sleep(57)
-
-""" 
-result = driver.find_element(By.TAG_NAME, 'body')
-print('body') 
-print(result.get_attribute('innerHTML'))
-"""
 
 # driver.quit()

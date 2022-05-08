@@ -3,7 +3,7 @@ const clubId = '88475b10-7c43-11ec-b15c-0242ac110005';
 const courses = { 
 	EAST: 'c76bca9f-7c43-11ec-b15c-0242ac110005', // 'EAST 코스', 
 	WEST: 'c76bccf9-7c43-11ec-b15c-0242ac110005', // 'WEST 코스' 
-  };
+};
 const OUTER_ADDR_HEADER = 'https://dev.mnemosyne.co.kr';
 const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/golfSchedule';
 const header = { "Content-Type": "application/json" };

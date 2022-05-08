@@ -31,9 +31,16 @@ function procDate() {
   const lmt = dates.length - 1;
   let cnt = 0;
   const timer = setInterval(() => {
+    // 마지막 수신 데이터까지 처리하기 위해 종료조건이 상단에 위치한다.
+    if (cnt > lmt) {
+      clearInterval(timer);
+      procGolfSchedule();
+      return;
+    }
+    // 데이터 수집
     const [date, weekend] = dates[cnt];
-	console.log('수집하기', cnt + '/' + lmt, date);
-    mneCallDetail(cnt === lmt, date, weekend, procGolfSchedule);
+	  console.log('수집하기', cnt + '/' + lmt, date);
+    mneCallDetail(date, weekend);
     cnt++;
     // if(cnt > 0) clearInterval(timer);
     if(cnt > lmt)  clearInterval(timer);
@@ -48,7 +55,7 @@ function procGolfSchedule() {
 	const param = { golf_schedule, golf_club_id: clubId };
 	post(addrOuter, param, header, () => {});
 };
-function mneCallDetail(opt, date, weekend, callback) {
+function mneCallDetail(date, weekend) {
   const param = { 
     clickTdId: '',
     clickTdClass: '',
@@ -91,7 +98,6 @@ function mneCallDetail(opt, date, weekend, callback) {
         others: '9홀',
       });
     });
-    if(opt) callback();
   });
 };
 function mneCall(date, callback) {
