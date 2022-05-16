@@ -1,8 +1,8 @@
-const clubId = 'fccb4e5e-bf95-11ec-a93e-0242ac11000a';
+const clubId = 'b8802aa3-cdb5-11ec-a93e-0242ac11000a';
 const courses = { 
-	VALLEY: '83703462-bf96-11ec-a93e-0242ac11000a', // 'VALLEY 코스', 
-	LAKE: '837037a5-bf96-11ec-a93e-0242ac11000a', // 'Pine 코스', 
-	MOUNTAIN: '837037e3-bf96-11ec-a93e-0242ac11000a', // 'MOUNTAIN 코스', 
+	EAST: 'd853a1bb-cdb5-11ec-a93e-0242ac11000a', // 'EAST 코스', 
+	WEST: 'd853a3b1-cdb5-11ec-a93e-0242ac11000a', // 'WEST 코스', 
+	SOUTH: 'd853a3ec-cdb5-11ec-a93e-0242ac11000a', // 'SOUTH 코스', 
 };
 const OUTER_ADDR_HEADER = 'https://dev.mnemosyne.co.kr';
 const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/golfSchedule';
@@ -38,10 +38,9 @@ function procDate() {
     }
     // 데이터 수집
     const [date] = dates[cnt];
-	  console.log('수집하기', cnt + '/' + lmt, date);
-    mneCallDetail(date);
+	console.log('수집하기', cnt + '/' + lmt, date);
+	mneCallDetail(date);
     cnt++;
-    // if(cnt > 0) clearInterval(timer);
   }, 300);
 }
 function procGolfSchedule() {
@@ -54,21 +53,19 @@ function procGolfSchedule() {
 	post(addrOuter, param, header, () => {});
 };
 function mneCallDetail(date) {
-  const param = { 
-    type: 'Real',
-    membership: '',
-    timezone: '',
-    course: '',
+	const param = { 
     date: date,
+    roundf: '1',
+    _:'',
   };
-  post('/_cm_core/reservation/ajax/timelist.asp', param, {}, (data) => {
-    const objResp = JSON.parse(data).timelist;
-    const dict = {1: 'VALLEY', 2: 'LAKE', 3: 'MOUNTAIN'};
+  get('getTeeList.do', param, {}, (data) => {
+    const objResp = JSON.parse(data).rows;
+    const dict = {A: 'EAST', B: 'WEST', C: 'SOUTH'};
     objResp.forEach((obj) => {
-      const course = dict[obj.course];
-      const time = obj.time.gh(2) + ":" + obj.time.gt(2);
-      const fee_normal = obj.gf_ori * 1;
-      const fee_discount = obj.gf_dis * 1;
+      const course = dict[obj.BK_COS];
+      const time = obj.BK_TIME.gh(2) + ":" + obj.BK_TIME.gt(2);
+      const fee_normal = obj.BK_BASIC_CHARGE.replace(/\,/g, '') * 1;
+      const fee_discount = obj.BK_BASIC_CHARGE.replace(/\,/g, '') * 1;
       
       golf_schedule.push({
         golf_club_id: clubId,
@@ -79,16 +76,24 @@ function mneCallDetail(date) {
         persons: '',
         fee_normal,
         fee_discount,
-        others: '9홀',
+        others: '18홀',
       });
     });
   });
 }
 function mneCall(date, callback) {
-  const as = Array.from(document.getElementsByClassName('reservation_request_button'));
-  as.forEach((a) => {
-    const date = a.getAttribute('date');
-    dates.push([date, 0]);
+  const hdr1 = calendarBox1.children[0].children[1].innerText.split(' / ').join('');
+  const tds1 = Array.from(calendarBox1.getElementsByClassName('possible'));
+  const hdr2 = calendarBox2.children[0].children[1].innerText.split(' / ').join('');
+  const tds2 = Array.from(calendarBox2.getElementsByClassName('possible'));
+  tds1.forEach((td) => {
+    const fulldate = hdr1 + td.innerText.addzero();
+    dates.push([fulldate, '']);
   });
+  tds2.forEach((td) => {
+    const fulldate = hdr2 + td.innerText.addzero();
+    dates.push([fulldate, '']);
+  });
+  
   callback();
-}
+};

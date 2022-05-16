@@ -121,3 +121,7 @@ String.prototype.ch = function (num) {
   //cut head
   return this.substring(num, this.length);
 };
+String.prototype.addzero = function () {
+  if(this.length == 1) return '0' + this;
+  return this;
+};
