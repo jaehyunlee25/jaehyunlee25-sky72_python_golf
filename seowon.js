@@ -38,8 +38,8 @@ function procDate() {
     }
     // 데이터 수집
     const [date] = dates[cnt];
-	console.log('수집하기', cnt + '/' + lmt, date);
-	mneCallDetail(date);
+    console.log('수집하기', cnt + '/' + lmt, date);
+    mneCallDetail(date);
     cnt++;
   }, 300);
 }
