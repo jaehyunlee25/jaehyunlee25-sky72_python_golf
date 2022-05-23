@@ -39,8 +39,6 @@ while True:
     print('\n\n== imperiallake ==')
     print('3.0. while start')
     driver.get('https://www.ilcc.co.kr/reservation/reservation.asp')
-    driver.execute_script('changeCoDiv("71")')  # 76:allday, 75:royal forrt, 71:imperiallake, 77:oxfield
-    time.sleep(3)
     driver.execute_script(con)
 
     print('4.0. while sleep 57')
