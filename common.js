@@ -41,15 +41,15 @@ function ajaxcallforgeneral() {
     j.xmlHttp.send(null);
   };
   this.post = function (addr, prm, header) {
-    // dateListId1.innerHTML = "";
+    /* // dateListId1.innerHTML = ""; */
 
     j.xmlHttp = new XMLHttpRequest();
     j.xmlHttp.onreadystatechange = on_ReadyStateChange;
     j.xmlHttp.onerror = onError;
     j.xmlHttp.open('POST', addr, true);
 
-    //header :: cors에 결정적
-    //j.xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    /* //header :: cors에 결정적
+    //j.xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded"); */
     if (header) {
       if (header['Content-Type'])
         Object.keys(header).forEach((key) => {
@@ -72,7 +72,7 @@ function ajaxcallforgeneral() {
     PARAM = prm;
     HEADER = JSON.stringify(header);
 
-    //console.log(prm);
+    /* //console.log(prm); */
     j.xmlHttp.send(prm);
   };
   this.file = function (addr, prm) {
@@ -94,7 +94,7 @@ function ajaxcallforgeneral() {
         var data = j.xmlHttp.responseText;
         j.ajaxcallback(data);
       } else {
-        // dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>\r\n";
+        /* // dateListId1.innerHTML += "<div>" + j.xmlHttp.readyState + " :: " + j.xmlHttp.status + "</div>\r\n"; */
       }
     }
   }
@@ -106,19 +106,19 @@ Array.prototype.trav = function (fnc) {
   }
 };
 String.prototype.gt = function (num) {
-  //get tail
+  /* //get tail */
   return this.substring(this.length - num, this.length);
 };
 String.prototype.gh = function (num) {
-  //get head
+  /* //get head */
   return this.substring(0, num);
 };
 String.prototype.ct = function (num) {
-  //get tail
+  /* //get tail */
   return this.substring(0, this.length - num);
 };
 String.prototype.ch = function (num) {
-  //cut head
+  /* //cut head */
   return this.substring(num, this.length);
 };
 String.prototype.addzero = function () {

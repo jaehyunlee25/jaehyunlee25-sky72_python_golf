@@ -28,16 +28,7 @@ l.close()
 
 driver.get('https://www.midasgolf.co.kr/Member/Login')
 driver.execute_script(lcon)
-time.sleep(1)
-
-# 환영 alert이 있는 경우
-try:
-    result = driver.switch_to_alert()
-    print(result.text)
-    result.accept()
-    result.dismiss()
-except:
-    print('There is no alert')
+time.sleep(2)
 
 f = open('common.js', 'r')
 common = f.read()
@@ -54,7 +45,7 @@ while True:
     print('\n\n\n\n\n\n== midas_lake ==')
     print('3.0. while start')
     driver.get('https://www.midasgolf.co.kr/Reservation/ReservCalendar?lgubun=113')
-    driver.implicitly_wait(3)
+    time.sleep(2)
     driver.execute_script(con)
 
     print('4.0. while sleep 57')

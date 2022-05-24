@@ -22,19 +22,17 @@ const dates = [];
 const result = [];
 const golf_schedule = [];
 
-mneCall(thisdate, procDate); // island cc는 날짜지정없이 무조건 오늘기준으로 한 달치를 보여줌
+mneCall(thisdate, procDate);
 
 function procDate() {
   const lmt = dates.length - 1;
   let cnt = 0;
   const timer = setInterval(() => {
-    // 마지막 수신 데이터까지 처리하기 위해 종료조건이 상단에 위치한다.
     if(cnt > lmt) {
       clearInterval(timer);
       procGolfSchedule();
       return;
     }
-    // 데이터 수집
     const [date] = dates[cnt];
 	  console.log('수집하기', cnt + '/' + lmt, date);
     mneCallDetail(date);

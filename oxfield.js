@@ -2,8 +2,8 @@ changeCoDiv("77");
 setTimeout(() => {  
   const clubId = '834761a4-c009-11ec-a93e-0242ac11000a';
   const courses = { 
-    OX: '7c40978c-c00a-11ec-a93e-0242ac11000a', // 'OX 코스', 
-    Field: '7c409a95-c00a-11ec-a93e-0242ac11000a', // 'Field 코스', 
+    OX: '7c40978c-c00a-11ec-a93e-0242ac11000a', /* 'OX 코스',  */
+    Field: '7c409a95-c00a-11ec-a93e-0242ac11000a', /* 'Field 코스',  */
   };
   const OUTER_ADDR_HEADER = 'https://dev.mnemosyne.co.kr';
   const addrOuter = OUTER_ADDR_HEADER + '/api/reservation/golfSchedule';
@@ -31,13 +31,13 @@ setTimeout(() => {
     const lmt = dates.length - 1;
     let cnt = 0;
     const timer = setInterval(() => {
-      // 마지막 수신 데이터까지 처리하기 위해 종료조건이 상단에 위치한다.
+      /* // 마지막 수신 데이터까지 처리하기 위해 종료조건이 상단에 위치한다. */
       if(cnt > lmt) {
         clearInterval(timer);
         procGolfSchedule();
         return;
       }
-      // 데이터 수집
+      /* // 데이터 수집 */
       const [date] = dates[cnt];
       console.log('수집하기', cnt + '/' + lmt, date);
       mneCallDetail(date);

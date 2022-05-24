@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
@@ -28,16 +30,10 @@ l.close()
 
 driver.get('https://kugolf.co.kr/login/login.asp')
 driver.execute_script(lcon)
-time.sleep(2)
 
-# 환영 alert이 있는 경우
-try:
-    result = driver.switch_to_alert()
-    print(result.text)
-    result.accept()
-    result.dismiss()
-except:
-    print('There is no alert')
+alert = WebDriverWait(driver, 10).until(expected_conditions.alert_is_present())
+print(alert.text)
+alert.accept()
 
 f = open('common.js', 'r')
 common = f.read()
